@@ -1,0 +1,15 @@
+.admin-content-right-category__list table {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.admin-content-right-category__list table tr th,
+td {
+    border: 1px solid #ddd;
+}
+
+table {
+    /* Các đường viền só sẽ trùng nhau */
+    border-collapse: collapse;
+}

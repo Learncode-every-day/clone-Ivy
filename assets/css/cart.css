@@ -1,0 +1,180 @@
+.cart {
+    padding: 100px 0;
+}
+
+.cart-top-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-top {
+    height: 2px;
+    width: 70%;
+    background: #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 0 100px;
+}
+
+.cart-top-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}
+
+.cart-top-cart img {
+    color: #ddd;
+}
+
+.cart-top-cart:first-child {
+    border: 1px solid #0db7ea;
+}
+
+.cart-top-cart:first-child img {
+    color: #0db7ea;
+}
+
+.cart-content-left {
+    flex: 2;
+    padding-right: 12px;
+}
+
+.cart-content-left tbody > tr td {
+    vertical-align: middle;
+}
+
+.cart-content-left table {
+    width: 100%;
+    text-align: center;
+}
+
+.cart-content-left table thead th {
+    padding-bottom: 30px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: #333;
+    /* Cho đường viền không dính vào nhau */
+    border-collapse: collapse;
+    border-bottom: 2px solid #ddd;
+}
+
+.cart-content-left table p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.cart-content-left table input {
+    width: 30px;
+}
+
+.cart-content-left table span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.cart-content-left table td:first-child img {
+    width: 130px;
+}
+
+.cart-content-left table td {
+    padding: 20px 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.cart-content-left table td:nth-child(2) {
+    max-width: 120px;
+}
+
+.cart-content-right {
+    flex: 1;
+    padding-left: 12px;
+    border-left: 2px solid #ddd;
+}
+
+.cart-content-right table {
+    width: 100%;
+}
+
+.cart-content-right thead th {
+    padding-bottom: 30px;
+    font-size: 1.2rem;
+    color: #333;
+    border-collapse: collapse;
+    border-bottom: 2px solid #ddd;
+}
+
+.cart-content-right tbody tr:nth-child(4) td {
+    border-bottom: 2px solid #ddd;
+}
+
+.cart-content-right tbody td:last-child {
+    text-align: right;
+}
+
+.cart-content-right-text {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.cart-content-right-text p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.cart-content-right-button {
+    text-align: center;
+}
+
+.cart-content-right-button button {
+    padding: 0 18px;
+    height: 35px;
+    cursor: pointer;
+    transition: 0.5s linear;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.cart-content-right-button button:first-child {
+    background: #fff;
+    border: 1px solid #000;
+    margin-right: 10px;
+    border-radius: 50px 0;
+}
+
+.cart-content-right-button button:first-child:hover {
+    background: #000;
+    color: #fff;
+}
+
+.cart-content-right-button button:last-child {
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.cart-content-right-button button:last-child:hover {
+    background: #ddd;
+    color: #333;
+}
+
+.cart-content-right-log-in {
+    margin-top: 20px;
+}
+
+.cart-content-right-log-in p {
+    font-size: 1.2rem;
+    font-weight: bold;
+}

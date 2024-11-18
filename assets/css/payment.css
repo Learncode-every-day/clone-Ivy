@@ -1,0 +1,118 @@
+.payment {
+    padding: 100px 0;
+}
+
+.payment-top-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-top {
+    height: 2px;
+    width: 70%;
+    background: #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 0 100px;
+}
+
+.payment-top-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}
+
+.payment-top-cart img {
+    color: #ddd;
+}
+
+.payment-top-cart:nth-child(3) {
+    border: 1px solid #0db7ea;
+}
+
+.payment-top-cart:nth-child(3) img {
+    color: #0db7ea;
+}
+
+.payment-content-left {
+    width: 60%;
+}
+
+.payment-content-right {
+    width: 40%;
+    border-left: 2px solid #ddd;
+    padding-left: 12px;
+}
+
+.payment-content-left p,
+.payment-content-left label {
+    font-size: 1.2rem;
+}
+
+.payment-content-right-button {
+    display: flex;
+    padding: 12px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.payment-content-right-button input {
+    height: 30px;
+    width: 200px;
+    margin-right: 100px;
+    padding-left: 12px;
+}
+
+.payment-content-right-button button {
+    height: 30px;
+    width: 100px;
+    background: #000;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.payment-content-right-mnv {
+    margin-top: 20px;
+}
+
+.payment-content-right-mnv select {
+    height: 30px;
+    width: 100%;
+    color: #75758a;
+    padding-left: 12px;
+    border: 1px solid #75758a;
+    border-radius: 5px;
+}
+
+.payment-content-right-payment {
+    margin-top: 50px;
+    align-items: center;
+    text-align: center;
+}
+
+.payment-content-right-payment button {
+    height: 35px;
+    padding: 0 20px;
+    font-size: 1.2rem;
+    color: #000;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid #000;
+    transition: 0.5s linear;
+}
+
+.payment-content-right-payment button:hover {
+    color: #fff;
+    background: #000;
+    border: 2px solid #ddd;
+}

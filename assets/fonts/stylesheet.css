@@ -1,0 +1,49 @@
+@font-face {
+    font-family: "Playwrite DE Grund";
+    src: url("./PlaywriteDeutschlandGrundschrift/PlaywriteDEGrund-ExtraLight.woff2")
+            format("woff2"),
+        url("PlaywriteDEGrund-ExtraLight.woff") format("woff");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Playwrite DE Grund";
+    src: url("./PlaywriteDeutschlandGrundschrift/PlaywriteDEGrund-Regular.woff2")
+            format("woff2"),
+        url("PlaywriteDEGrund-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Playwrite DE Grund";
+    src: url("./PlaywriteDeutschlandGrundschrift/PlaywriteDEGrund-Light.woff2")
+            format("woff2"),
+        url("PlaywriteDEGrund-Light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Playwrite DE Grund";
+    src: url("./PlaywriteDeutschlandGrundschrift/PlaywriteDEGrund-Thin.woff2")
+            format("woff2"),
+        url("PlaywriteDEGrund-Thin.woff") format("woff");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Playwrite DE Grund";
+    src: url("./PlaywriteDeutschlandGrundschrift/PlaywriteDEGrund-Regular.woff2")
+            format("woff2"),
+        url("PlaywriteDEGrund-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
