@@ -78,11 +78,20 @@ class Product
 
     public function show_product()
     {
-        $query = "SELECT table_product.*, table_brand.brand_id, table_category.category_id FROM table_product INNER JOIN table_brand ON table_product.brand_id = table_brand.brand_id
-        INNER JOIN table_category ON table_product.category_id = table_category.category_id";
+        $query = "SELECT table_product.*, table_brand.brand_name, table_category.category_name FROM table_product INNER JOIN table_brand ON table_product.brand_id = table_brand.brand_id
+        INNER JOIN table_category ON table_product.category_id = table_category.category_id ORDER BY table_product.product_id DESC";
         $result = $this->db->select($query);
         return $result;
     }
+
+    public function show_img_desc()
+    {
+        $query = "SELECT table_product.*, table_product_img_desc.product_img_desc FROM table_product INNER JOIN table_product_img_desc ON table_product.product_id = table_product_img_desc.product_id ORDER BY table_product.product_id DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
     /*======================================= */
 
     //? Show brand
