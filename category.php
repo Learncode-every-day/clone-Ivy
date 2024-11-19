@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/css/styles.css" />
-        <link rel="stylesheet" href="./assets/css/cart.css" />
-        <title>Ivy-Project | Cart</title>
+        <link rel="stylesheet" href="./assets/css/category.css" />
+        <title>Ivy-Project | Category</title>
     </head>
     <body>
         <!-- Header -->
@@ -612,149 +612,149 @@
             </div>
         </header>
 
-        <!-- Cart -->
-        <section class="cart">
+        <!-- Category -->
+        <section class="category">
             <div class="container">
-                <div class="cart-top-wrap">
-                    <div class="cart-top">
-                        <div class="cart-top-cart">
-                            <img
-                                src="./assets/icons/cart-shopping.svg"
-                                alt=""
-                                class="cart-icon"
-                            />
-                        </div>
-                        <div class="cart-top-cart">
-                            <img
-                                src="./assets/icons/location.svg"
-                                alt=""
-                                class="location-icon"
-                            />
-                        </div>
-                        <div class="cart-top-cart">
-                            <img
-                                src="./assets/icons/credit-card.svg"
-                                alt=""
-                                class="credit-icon"
-                            />
-                        </div>
-                    </div>
+                <div class="category-top">
+                    <p>
+                        Trang chủ <span>&rarr;</span> Nữ
+                        <span>&rarr;</span> Hàng nữ mới
+                    </p>
                 </div>
-                <div class="cart-content row">
-                    <div class="cart-content-left">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Sản phẩm</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Màu</th>
-                                    <th>Size</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
-                                    <th>Xóa</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img
-                                            src="./assets/img/category-img/pic1_1.jpg"
-                                            alt=""
-                                        />
-                                    </td>
-                                    <td>
-                                        <p>Quần Sock</p>
-                                    </td>
-                                    <td>
-                                        <img
-                                            style="
-                                                display: block;
-                                                width: 20px;
-                                                height: 20px;
-                                                border-radius: 50%;
-                                            "
-                                            src="./assets/img/color.jpg"
-                                            alt=""
-                                        />
-                                    </td>
-                                    <td>
-                                        <p>L</p>
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="number"
-                                            value="1"
-                                            min="1"
-                                        />
-                                    </td>
-                                    <td>
-                                        <p>489.000 <sup>đ</sup></p>
-                                    </td>
-                                    <td>
-                                        <span>X</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            </div>
+            <div class="container row">
+                <div class="category-left">
+                    <ul class="category-left__list">
+                        <li class="category-left__item">
+                            <a href="#!" class="category-left__link">Nữ</a>
+                            <ul>
+                                <li>
+                                    <a href="#!">Hàng nữ mới về</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Beyond trendy</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Jeans for joy</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Quần jeans nữ</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="category-left__item">
+                            <a href="#!" class="category-left__link">Nam</a>
+                            <ul>
+                                <li>
+                                    <a href="#!">Hàng nam mới về</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Beyond trendy</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Jeans for joy</a>
+                                </li>
+                                <li>
+                                    <a href="#!">Quần jeans nam</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="category-left__item">
+                            <a href="#!" class="category-left__link">Trẻ em</a>
+                            <ul>
+                                <li>
+                                    <a href="#!">Quần áo cho trẻ em</a>
+                                </li>
+                                <li>
+                                    <a href="#!"></a>
+                                </li>
+                                <li>
+                                    <a href="#!"></a>
+                                </li>
+                                <li>
+                                    <a href="#!"></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="category-left__item">
+                            <a href="#!" class="category-left__link"
+                                >Bộ sưu tập</a
+                            >
+                        </li>
+                        <li class="category-left__item">
+                            <a href="#!" class="category-left__link"
+                                >Đồ bảo hộ</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div class="category-right">
+                    <div class="category-right-top">
+                        <div class="category-right-top__item">
+                            <p>Hàng nữ mời về</p>
+                        </div>
+                        <div class="category-right-top__select">
+                            <div class="category-right-top__item">
+                                <button>
+                                    <span>Bộ lọc</span
+                                    ><img
+                                        src="./assets/icons/sort-down.svg"
+                                        alt=""
+                                        class="sort-down-icon"
+                                    />
+                                </button>
+                            </div>
+                            <div class="category-right-top__item">
+                                <select name="sort" id="">
+                                    <option value="">Sắp xếp</option>
+                                    <option value="">Giá cao đến thấp</option>
+                                    <option value="">Giá thấp đến cao</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="cart-content-right">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th colspan="2">Tổng tiền giỏ hàng</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tổng sản phẩm</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>Tổng tiền hàng</td>
-                                    <td>
-                                        <p>489.000 <sup>đ</sup></p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Thành tiền</td>
-                                    <td>1.500.000 <sup>đ</sup></td>
-                                </tr>
-                                <tr>
-                                    <td>Tạm tính</td>
-                                    <td>
-                                        <p
-                                            style="
-                                                color: #000;
-                                                font-weight: bold;
-                                            "
-                                        >
-                                            489.000 <sup>đ</sup>
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="cart-content-right-text">
-                            <p>
-                                Bạn sẽ được miễn phí ship khi đơn hàng có tổng
-                                giá trị trên 2.000.000đ
-                            </p>
-                            <p style="color: red; font-weight: bold">
-                                Mua thêm
-                                <span style="font-size: 1.8rem">131.000đ</span>
-                                để được miễn phí SHIP
-                            </p>
+                    <div class="category-right-content row">
+                        <div class="category-right-content__item">
+                            <img
+                                src="./assets/img/category-img/pic1_1.jpg"
+                                alt=""
+                            />
+                            <h1>Áo khoác Tweed cổ V Flare</h1>
+                            <p>2.190.000<sup>đ</sup></p>
                         </div>
-                        <div class="cart-content-right-button">
-                            <button>Tiếp tục mua sắm</button>
-                            <button>Thanh toán</button>
+                        <div class="category-right-content__item">
+                            <img
+                                src="./assets/img/category-img/pic2_1.jpg"
+                                alt=""
+                            />
+                            <h1>Áo khoác Tweed cổ V Flare</h1>
+                            <p>2.190.000<sup>đ</sup></p>
                         </div>
-                        <div class="cart-content-right-log-in">
-                            <p>Tài khoản IVY</p>
+                        <div class="category-right-content__item">
+                            <img
+                                src="./assets/img/category-img/pic3_1.jpg"
+                                alt=""
+                            />
+                            <h1>Áo khoác Tweed cổ V Flare</h1>
+                            <p>2.190.000<sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content__item">
+                            <img
+                                src="./assets/img/category-img/pic4_1.jpg"
+                                alt=""
+                            />
+                            <h1>Áo khoác Tweed cổ V Flare</h1>
+                            <p>2.190.000<sup>đ</sup></p>
+                        </div>
+                    </div>
+                    <div class="category-right-bottom row">
+                        <div class="category-right-bottom__item">
+                            <p>Hiển thị 2 <span>|</span> 4 sản phẩm</p>
+                        </div>
+                        <div class="category-right-bottom__item">
                             <p>
-                                Hãy <a href="#!"> Đăng nhập</a> tài khoản để
-                                tích điểm thành viên
+                                <span>&#171;</span> 1 2 3 4
+                                <span>&#187;</span> Trang Cuối
                             </p>
                         </div>
                     </div>
@@ -839,17 +839,5 @@
             <div class="footer-bottom">@Ivymoda All rights reserved</div>
         </footer>
     </body>
-    <script src="./assets/js/slider.js"></script>
-    <script>
-        const header = document.querySelector("header");
-        window.addEventListener("scroll", function () {
-            // Bắt được tọa độ khi di chuyển lên xuống theo chiều dọc - y
-            x = window.pageYOffset;
-            if (x > 0) {
-                header.classList.add("sticky");
-            } else {
-                header.classList.remove("sticky");
-            }
-        });
-    </script>
+    <script src="./assets/js/category.js"></script>
 </html>

@@ -51,7 +51,6 @@ button {
 
 .row {
     display: flex;
-    flex-wrap: wrap;
 }
 
 /* Aspect ratio */
@@ -146,6 +145,8 @@ button {
 
 .sub-menu {
     position: absolute;
+    left: 0;
+    top: 70px;
     z-index: 999;
     height: 444px;
     width: 1140px;
@@ -154,7 +155,6 @@ button {
     padding: 10px 0 10px 20px;
     visibility: hidden;
     opacity: 0;
-    top: 70px;
     transition: all 0.5s linear;
     display: grid;
     grid-template-columns: repeat(5, 1fr);

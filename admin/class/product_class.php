@@ -76,6 +76,13 @@ class Product
         return $result;
     }
 
+    public function show_product()
+    {
+        $query = "SELECT table_product.*, table_brand.brand_id, table_category.category_id FROM table_product INNER JOIN table_brand ON table_product.brand_id = table_brand.brand_id
+        INNER JOIN table_category ON table_product.category_id = table_category.category_id";
+        $result = $this->db->select($query);
+        return $result;
+    }
     /*======================================= */
 
     //? Show brand
