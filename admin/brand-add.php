@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="admin-content-right">
     <div class="admin-content-right-category__add">
-        <h1>Thêm Danh Mục</h1>
+        <h1 style="text-align: center">Thêm Danh Mục</h1>
         <form action="" method="POST">
             <select name="category_id" id="">
                 <option value="#">--Chọn danh mục--</option>

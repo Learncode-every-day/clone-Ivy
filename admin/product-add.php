@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="admin-content-right">
     <div class="admin-content-right-product__add">
-        <h1>Thêm Sản Phẩm</h1>
+        <h1 style="text-align: center">Thêm Sản Phẩm</h1>
         <!-- enctype để có thể lấy được file -->
         <form action="" method="POST" enctype="multipart/form-data">
             <label for="">Nhập tên sản phẩm

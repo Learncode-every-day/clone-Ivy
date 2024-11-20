@@ -19,6 +19,7 @@ class Category
         $query = "INSERT INTO table_category (category_name) VALUES ('$category_name')";
         $result = $this->db->insert($query);
         header("Location:category-list.php");
+        return $result;
     }
 
     public function show_category()

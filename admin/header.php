@@ -15,5 +15,5 @@
 
 <body>
     <header>
-        <h1>Top</h1>
+        <h1>Admin</h1>
     </header>

@@ -17,9 +17,12 @@ ul {
 }
 
 header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100px;
+    background: #8aeee9;
     border-bottom: 2px solid #ddd;
-    text-align: center;
 }
 
 .admin-content {

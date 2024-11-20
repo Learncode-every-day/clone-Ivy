@@ -20,9 +20,11 @@ $show_product = $product->show_product();
                     <th>Danh mục</th>
                     <th>Loại sản phẩm</th>
                     <th>Tên sản phẩm</th>
-                    <th>Giá sản phẩm</th>
+                    <th>Giá sản phẩm ban đầu</th>
+                    <th>Giá sản phẩm sau khi giảm</th>
                     <th>Ảnh chính</th>
                     <th>Ảnh đi kèm</th>
+                    <th>Mô tả sản phẩm</th>
                     <th>Tùy biến</th>
                 </tr>
             </thead>
@@ -35,10 +37,11 @@ $show_product = $product->show_product();
                 ?>
                         <tr>
                             <td><?php echo $i; ?></td>
-                            <td><?php echo $result['product_name']; ?></td>
                             <td><?php echo $result['category_name'] ?></td>
                             <td><?php echo $result['brand_name'] ?></td>
+                            <td><?php echo $result['product_name']; ?></td>
                             <td><?php echo $result['product_price'] ?></td>
+                            <td><?php echo $result['product_price_sale'] ?></td>
                             <td>
                                 <img style="height: 30px; object-fit:contain"
                                     src="./uploads/<?php echo $result['product_img'] ?>" alt="">
@@ -62,9 +65,10 @@ $show_product = $product->show_product();
                                     ?>
                                 </div>
                             </td>
+                            <td><?php echo $result['product_desc'] ?></td>
                             <td>
-                                <a href="category-edit.php?category_id=<?php echo $result['category_id']; ?>">Sửa</a>|<a
-                                    href="category-delete.php?category_id=<?php echo $result['category_id']; ?>">Xóa</a>
+                                <a href="product-edit.php?product_id=<?php echo $result['product_id']; ?>">Sửa</a>|<a
+                                    href="product-delete.php?product_id=<?php echo $result['product_id']; ?>">Xóa</a>
                             </td>
                         </tr>
                 <?php }

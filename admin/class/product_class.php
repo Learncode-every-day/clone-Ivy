@@ -91,6 +91,36 @@ class Product
         return $result;
     }
 
+    public function delete_product($product_id)
+    {
+        $query = "DELETE table_product, table_product_img_desc 
+    FROM table_product 
+    JOIN table_product_img_desc 
+    ON table_product.product_id = table_product_img_desc.product_id 
+    WHERE table_product.product_id = '$product_id'";
+        $result = $this->db->delete($query);
+        header("Location:product-list.php");
+        return $result;
+    }
+
+    public function get_product($product_id)
+    {
+        $query = "SELECT * FROM table_product WHERE product_id = '$product_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    // Lấy ảnh của sản phẩm
+    public function get_img($product_id)
+    {
+        $query = "SELECT table_product_img_desc.*, table_product FROM table_product_img_desc INNER JOIN table_product ON table_product_img_desc.product_id = table_product.product_id WHERE product_id = '$product_id'
+        ORDER BY table_product_img_desc.product_id";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
+
 
     /*======================================= */
 
