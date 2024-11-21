@@ -13,15 +13,6 @@ class Product
         $this->db = new Database();
     }
 
-    /*======================================= */
-    public function insert_brand($category_id, $brand_name)
-    {
-        $query = "INSERT INTO table_brand (category_id, brand_name) VALUES ('$category_id', '$brand_name')";
-        $result = $this->db->insert($query);
-        header("Location:brand-list.php");
-        return $result;
-    }
-
     public function insert_product()
     {
         $product_name = $_POST['product_name'];
@@ -69,6 +60,8 @@ class Product
                             $result = $this->db->insert($query);
                         }
                     }
+
+                    header("Location: http://localhost/clone-Ivy/admin/product-list.php");
                 }
             }
         }
@@ -80,6 +73,13 @@ class Product
     {
         $query = "SELECT table_product.*, table_brand.brand_name, table_category.category_name FROM table_product INNER JOIN table_brand ON table_product.brand_id = table_brand.brand_id
         INNER JOIN table_category ON table_product.category_id = table_category.category_id ORDER BY table_product.product_id DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function show_brand_ajax($category_id)
+    {
+        $query = "SELECT * FROM table_brand WHERE category_id = '$category_id'";
         $result = $this->db->select($query);
         return $result;
     }
@@ -105,26 +105,84 @@ class Product
 
     public function get_product($product_id)
     {
-        $query = "SELECT * FROM table_product WHERE product_id = '$product_id'";
+        $query = "SELECT 
+    p.product_id,
+    p.product_name,
+    p.product_price,
+    p.product_price_sale,
+    p.product_desc,
+    p.product_img,
+    b.brand_name,
+    b.brand_id,
+    c.category_name,
+    c.category_id
+FROM table_product p
+LEFT JOIN table_brand b 
+    ON p.brand_id = b.brand_id
+LEFT JOIN table_category c 
+    ON p.category_id = c.category_id
+WHERE p.product_id = '$product_id'
+
+UNION
+
+SELECT 
+    p.product_id,
+    p.product_name,
+    p.product_price,
+    p.product_price_sale,
+    p.product_desc,
+    p.product_img,
+    b.brand_name,
+    b.brand_id,
+    c.category_name,
+    c.category_id
+FROM table_product p
+RIGHT JOIN table_brand b 
+    ON p.brand_id = b.brand_id
+RIGHT JOIN table_category c 
+    ON p.category_id = c.category_id
+WHERE p.product_id = '$product_id';
+";
         $result = $this->db->select($query);
         return $result;
     }
 
-    // Lấy ảnh của sản phẩm
+    // Lấy loại sản phẩm từ sản phẩm và danh mục có sẵn của nó
+    public function show_brand_by_category($category_id)
+    {
+        $query = "SELECT DISTINCT b.brand_id
+FROM table_brand b
+INNER JOIN table_category c 
+    ON b.category_id = c.category_id
+INNER JOIN table_product p 
+    ON p.category_id = c.category_id
+WHERE p.product_id = '$category_id';
+";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    // Lấy ảnh chi tiết của sản phẩm
     public function get_img($product_id)
     {
-        $query = "SELECT table_product_img_desc.*, table_product FROM table_product_img_desc INNER JOIN table_product ON table_product_img_desc.product_id = table_product.product_id WHERE product_id = '$product_id'
-        ORDER BY table_product_img_desc.product_id";
+        $query = "SELECT table_product_img_desc.*, table_product.product_id FROM table_product_img_desc INNER JOIN table_product ON table_product_img_desc.product_id = table_product.product_id WHERE table_product_img_desc.product_id = '$product_id' ORDER BY table_product_img_desc.product_id DESC";
         $result = $this->db->select($query);
         return $result;
     }
 
-
+    // Lấy đi kích thước của hình ảnh
 
 
     /*======================================= */
+    //!  Category: Danh mục
+    public function insert_category($category_name)
+    {
+        $query = "INSERT INTO table_category (category_name) VALUES ('$category_name')";
+        $result = $this->db->insert($query);
+        header("Location:category-list.php");
+        return $result;
+    }
 
-    //? Show brand
     public function show_category()
     {
         $query = "SELECT * FROM table_category ORDER BY category_id DESC";
@@ -132,26 +190,43 @@ class Product
         return $result;
     }
 
-    public function show_brand()
+    public function get_category($category_id)
     {
-        // $query = "SELECT * FROM table_brand ORDER BY brand_id DESC";
-        $query = "SELECT table_brand.*, table_category.category_name FROM table_brand INNER JOIN table_category ON table_brand.category_id = table_category.category_id ORDER BY  table_brand.brand_id DESC";
+        $query = "SELECT * FROM table_category WHERE category_id = '$category_id'";
         $result = $this->db->select($query);
         return $result;
     }
 
-    public function show_brand_ajax($category_id)
+    public function update_category($category_name, $category_id)
     {
-        $query = "SELECT * FROM table_brand WHERE category_id = '$category_id'";
-        $result = $this->db->select($query);
+        $query = "UPDATE table_category SET category_name = '$category_name' WHERE category_id = '$category_id'";
+        $result = $this->db->update($query);
+        header("Location:category-list.php");
+        return $result;
+    }
+
+    public function delete_category($category_id)
+    {
+        $query = "DELETE FROM table_category WHERE category_id = '$category_id'";
+        $result = $this->db->delete($query);
+        header("Location:category-list.php");
         return $result;
     }
 
     /*======================================= */
-    //? Get brand
-    public function get_category($category_id)
+    //!  Brand: Loại sản phẩm
+    public function insert_brand($category_id, $brand_name)
     {
-        $query = "SELECT * FROM table_category WHERE category_id = '$category_id'";
+        $query = "INSERT INTO table_brand (category_id, brand_name) VALUES ('$category_id', '$brand_name')";
+        $result = $this->db->insert($query);
+        header("Location:brand-list.php");
+        return $result;
+    }
+
+    public function show_brand()
+    {
+        $query = "SELECT * FROM table_brand ORDER BY brand_id DESC";
+        // $query = "SELECT table_brand.*, table_category.category_name FROM table_brand INNER JOIN table_category ON table_brand.category_id = table_category.category_id ORDER BY  table_brand.brand_id DESC";
         $result = $this->db->select($query);
         return $result;
     }
@@ -163,8 +238,6 @@ class Product
         return $result;
     }
 
-
-    //? Update brand
     public function update_brand($category_id, $brand_id, $brand_name)
     {
         $query = "UPDATE table_brand SET brand_name = '$brand_name', category_id = '$category_id' WHERE brand_id = '$brand_id'";
@@ -173,30 +246,11 @@ class Product
         return $result;
     }
 
-    public function update_category($category_name, $category_id)
-    {
-        $query = "UPDATE table_category SET category_name = '$category_name' WHERE category_id = '$category_id'";
-        $result = $this->db->update($query);
-        header("Location:category-list.php");
-        return $result;
-    }
-    /*======================================= */
-
-
-    //? Delete brand
     public function delete_brand($brand_id)
     {
         $query = "DELETE FROM table_brand WHERE brand_id = '$brand_id'";
         $result = $this->db->delete($query);
         header("Location:brand-list.php");
-        return $result;
-    }
-
-    public function delete_category($category_id)
-    {
-        $query = "DELETE FROM table_category WHERE category_id = '$category_id'";
-        $result = $this->db->delete($query);
-        header("Location:category-list.php");
         return $result;
     }
 }

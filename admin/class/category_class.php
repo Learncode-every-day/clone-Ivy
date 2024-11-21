@@ -13,7 +13,6 @@ class Category
         $this->db = new Database();
     }
 
-    // 
     public function insert_category($category_name)
     {
         $query = "INSERT INTO table_category (category_name) VALUES ('$category_name')";
