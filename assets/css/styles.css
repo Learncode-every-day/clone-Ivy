@@ -250,6 +250,7 @@ button {
 }
 
 .other__item:first-child {
+    margin-top: 16px;
     position: relative;
     display: flex;
     align-items: center;
@@ -269,6 +270,10 @@ button {
     right: -10px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.other__item:first-child::after {
+    top: 32%;
 }
 
 .other__item:last-child::after {

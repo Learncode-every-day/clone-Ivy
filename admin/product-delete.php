@@ -2,7 +2,7 @@
 include "class/product_class.php";
 $product = new Product();
 if (!isset($_GET['product_id']) || $_GET['product_id'] == null) {
-    echo "<script>window.location = 'category-list.php'</script>";
+    echo "<script>window.location = 'product-list.php'</script>";
 } else {
     $product_id = $_GET['product_id'];
 }

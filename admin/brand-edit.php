@@ -21,17 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <style>
-    select {
-        margin-top: 20px;
-        height: 30px;
-        width: 200px;
-        border-radius: 5px;
-    }
+select {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    border-radius: 5px;
+}
 </style>
 
 <div class="admin-content-right">
     <div class="admin-content-right-category__add">
-        <h1>Thêm Danh Mục</h1>
+        <h1 style="text-align: center">Sửa loại sản phẩm</h1>
         <form action="" method="POST">
             <select name="category_id" id="">
                 <option value="#">--Chọn danh mục--</option>
@@ -41,10 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     while ($result = $show_category->fetch_assoc()) {
 
                 ?>
-                        <option <?php if ($resultA['category_id'] == $result['category_id']) {
+                <option <?php if ($resultA['category_id'] == $result['category_id']) {
                                     echo "SELECTED";
                                 } ?> value="<?php echo $result['category_id']; ?>">
-                            <?php echo $result['category_name']; ?></option>
+                    <?php echo $result['category_name']; ?></option>
                 <?php
 
                     }

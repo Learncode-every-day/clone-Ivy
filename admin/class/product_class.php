@@ -26,7 +26,7 @@ class Product
         $fileType = strtolower(pathinfo($product_img, PATHINFO_EXTENSION));
         $fileSize = $_FILES['product_img']['size'];
 
-        if (file_exists("uploads/$fileTarget")) {
+        if (file_exists("./uploads/$fileTarget")) {
             $alert = "File đã tồn tại";
             return $alert;
         } else {
@@ -71,7 +71,7 @@ class Product
 
     public function show_product()
     {
-        $query = "SELECT table_product.*, table_brand.brand_name, table_category.category_name FROM table_product INNER JOIN table_brand ON table_product.brand_id = table_brand.brand_id
+        $query = "SELECT table_product.*, table_brand.brand_name, table_category.category_name, table_brand.brand_id, table_category.category_id FROM table_product INNER JOIN table_brand ON table_product.brand_id = table_brand.brand_id
         INNER JOIN table_category ON table_product.category_id = table_category.category_id ORDER BY table_product.product_id DESC";
         $result = $this->db->select($query);
         return $result;
@@ -99,7 +99,8 @@ class Product
     ON table_product.product_id = table_product_img_desc.product_id 
     WHERE table_product.product_id = '$product_id'";
         $result = $this->db->delete($query);
-        header("Location:product-list.php");
+        header("Location:http://localhost/clone-Ivy/admin/product-list.php");
+        // echo "Xóa thành công";
         return $result;
     }
 
@@ -170,8 +171,58 @@ WHERE p.product_id = '$category_id';
         return $result;
     }
 
-    // Lấy đi kích thước của hình ảnh
+    // Lấy toàn bộ ảnh trong bảng table_product_img_desc
 
+    public function get_all_img()
+    {
+        $query = "SELECT table_product_img_desc_*, table_product.product_id FROM table_product ON table_product_img_desc.product_id = table_product.product_id ORDER BY table_product.product_id DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function update_product($data, $file, $product_id)
+    {
+        $product_name = $data['product_name'];
+        $brand_id = $data['brand_id'];
+        $category_id = $data['category_id'];
+        $product_price = $data['product_price'];
+        $product_price_sale = $data['product_price_sale'];
+        $product_desc = $data['product_desc'];
+        $file_name = $file['product_img']['name'];
+        $file_tmp = $file['product_img']['tmp_name'];
+        $file_all_name = $file['product_img_desc']['name'];
+        $file_all_tmp = $file['product_img_desc']['tmp_name'];
+        $div = explode('.', $file_name);
+        //? Kiểm tra xem file đã tồn tại chưa
+        $file_ext = strtolower(end($div));
+        $product_img = substr(md5(time()), 0, 10) . '.' . $file_ext;
+        $upload_image = "./uploads/" . $product_img;
+        move_uploaded_file($file_tmp, $upload_image);
+        if (!empty($file_name) && !empty($file_all_name)) {
+            $query = "UPDATE table_product SET product_name = '$product_name', brand_id = '$brand_id', category_id = '$category_id',product_price = '$product_price', product_price_sale = '$product_price_sale', product_desc = '$product_desc', product_img = '$product_img' WHERE product_id = '$product_id'";
+            $result = $this->db->update($query);
+            // Nếu đã tồn tại để sửa thì tiếp tục xóa và cập nhật lại bảng table_product_img_desc
+            if ($result) {
+                $query = "DELETE FROM table_product_img_desc WHERE product_id = '$product_id'";
+                $result = $this->db->delete($query);
+                foreach ($file_all_name as $key => $element) {
+                    move_uploaded_file($file_all_tmp[$key], "./uploads/" . $element);
+                    $query = "INSERT INTO table_product_img_desc(product_id, product_img_desc) VALUES ('$product_id', '$element')";
+                    $result = $this->db->insert($query);
+                }
+            }
+            header("Location: http://localhost/clone-Ivy/admin/product-list.php");
+            return $result;
+        }
+    }
+
+    // Lấy sản phẩm bằng nội dung được nhập bởi search box.
+    public function get_product_by_content($content)
+    {
+        $query = "SELECT * FROM table_product WHERE product_name LIKE '%$content%'";
+        $result = $this->db->select($query);
+        return $result;
+    }
 
     /*======================================= */
     //!  Category: Danh mục

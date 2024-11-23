@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 18, 2024 lúc 06:18 AM
+-- Thời gian đã tạo: Th10 21, 2024 lúc 05:24 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -39,13 +39,11 @@ CREATE TABLE `table_brand` (
 
 INSERT INTO `table_brand` (`brand_id`, `category_id`, `brand_name`) VALUES
 (6, 0, 'Set váy đầm 2'),
-(11, 17, 'Địa Chỉ'),
-(12, 17, 'Số điện thoại'),
-(13, 16, 'Set váy đầm'),
-(14, 15, 'Váy ngủ'),
-(15, 14, 'Set combo 3 trong 1'),
-(16, 13, 'Áo thun'),
-(17, 12, 'Váy');
+(19, 12, 'Váy 35'),
+(20, 12, 'Váy 1'),
+(21, 15, 'Trường'),
+(22, 15, 'Giảm sâu'),
+(23, 12, 'Áo sơ mi');
 
 -- --------------------------------------------------------
 
@@ -92,12 +90,11 @@ CREATE TABLE `table_product` (
 --
 
 INSERT INTO `table_product` (`product_id`, `product_name`, `brand_id`, `product_price`, `product_price_sale`, `product_desc`, `product_img`, `category_id`) VALUES
-(6, 'Sản phẩm test', 16, '54564', '1313', 'adawdwdad', '341848671_1949273305408129_8604018268707300477_n.jpg', 17),
-(7, 'a', 16, '54564', '1313', 'dauwgudikaw', '341848671_1949273305408129_8604018268707300477_n.jpg', 17),
-(8, 'a', 17, '54564', '1313', 'adwdwa', 'dan-heng-honkai-star-rail.gif', 17),
-(9, 'a', 17, '54564', '1313', 'đuawad', '0106_hinh-nen-4k-may-tinh32.jpg', 17),
-(10, 'a', 17, '54564', '1313', 'đuawad', '0106_hinh-nen-4k-may-tinh32.jpg', 17),
-(11, 'a', 12, '54564', '1313', '<p><img alt=\"\" src=\"/clone-IVY/admin/images/files/0106_hinh-nen-4k-may-tinh4.jpg\" style=\"height:900px; width:1600px\" /></p>\r\n', '0106_hinh-nen-4k-may-tinh4.jpg', 17);
+(13, 'Sản phẩm test', 21, '45', '30', '<p>a</p>\r\n', 'pic14_1.jpg', 15),
+(14, 'Trường', 21, '20', '10', '<p>Gi&aacute; trị đi k&egrave;m với chất lượng</p>\r\n', 'pic11_1.jpg', 15),
+(15, 'Trường lỏ', 22, '10', '5', '<p>Rất hữu dụng với lo&agrave;i người</p>\r\n', 'pic7_1.jpg', 15),
+(16, 'Áo sơ mi lụa cổ điển Lucille', 23, '30', '10', '<p>&Aacute;o sờ rất m&aacute;t tay</p>\r\n', 'pic4_1.jpg', 12),
+(17, 'test', 20, '30', '10', '<p>test sản phẩm</p>\r\n', 'pic6_1.jpg', 12);
 
 -- --------------------------------------------------------
 
@@ -115,18 +112,38 @@ CREATE TABLE `table_product_img_desc` (
 --
 
 INSERT INTO `table_product_img_desc` (`product_id`, `product_img_desc`) VALUES
-(8, 'd660f4eacc3a7f35aff15292afe34f91.png'),
-(8, 'dan-heng-honkai-star-rail.gif'),
-(8, 'FTqhyhCUsAAyPmI.jpeg'),
-(9, '740051.jpg'),
-(9, 'anh-dong-luc-cho-ban-than_105243618.jpg'),
-(9, 'anh-nen-4k-cho-win-10_105907787.jpg'),
-(10, '740051.jpg'),
-(10, 'anh-dong-luc-cho-ban-than_105243618.jpg'),
-(10, 'anh-nen-4k-cho-win-10_105907787.jpg'),
-(11, '0106_hinh-nen-4k-may-tinh4.jpg'),
-(11, '0106_hinh-nen-4k-may-tinh32.jpg'),
-(11, '999-hinh-nen-may-tinh-pc-laptop-full-hd-2k-4k-8k-cuc-dep-2019-3.jpg');
+(13, 'pic14_6.jpg'),
+(13, 'pic14_5.jpg'),
+(13, 'pic14_4.jpg'),
+(13, 'pic14_3.jpg'),
+(13, 'pic14_2.jpg'),
+(13, 'pic14_1.jpg'),
+(14, 'pic11_8.jpg'),
+(14, 'pic11_7.jpg'),
+(14, 'pic11_6.jpg'),
+(14, 'pic11_5.jpg'),
+(14, 'pic11_4.jpg'),
+(14, 'pic11_3.jpg'),
+(14, 'pic11_2.jpg'),
+(14, 'pic11_1.jpg'),
+(15, 'pic7_6.jpg'),
+(15, 'pic7_5.jpg'),
+(15, 'pic7_4.jpg'),
+(15, 'pic7_3.jpg'),
+(15, 'pic7_2.jpg'),
+(15, 'pic7_1.jpg'),
+(16, 'pic4_6.jpg'),
+(16, 'pic4_5.jpg'),
+(16, 'pic4_4.jpg'),
+(16, 'pic4_3.jpg'),
+(16, 'pic4_2.jpg'),
+(16, 'pic4_1.jpg'),
+(17, 'pic6_6.jpg'),
+(17, 'pic6_5.jpg'),
+(17, 'pic6_4.jpg'),
+(17, 'pic6_3.jpg'),
+(17, 'pic6_2.jpg'),
+(17, 'pic6_1.jpg');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -158,19 +175,19 @@ ALTER TABLE `table_product`
 -- AUTO_INCREMENT cho bảng `table_brand`
 --
 ALTER TABLE `table_brand`
-  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT cho bảng `table_category`
 --
 ALTER TABLE `table_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `table_product`
 --
 ALTER TABLE `table_product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

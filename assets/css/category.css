@@ -92,7 +92,10 @@
 }
 
 .category-right-content__item img {
+    display: block;
+    height: 100%;
     width: 100%;
+    object-fit: contain;
 }
 
 .category-right-content__item p {
@@ -102,7 +105,7 @@
 .category-right-bottom {
     width: 100%;
     justify-content: space-between;
-    margin: 30px 0 20px;
+    margin: 50px 0 20px;
 }
 
 .category-right-bottom p {

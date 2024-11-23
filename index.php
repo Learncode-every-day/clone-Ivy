@@ -1,13 +1,4 @@
 <?php
-// Liên kết với các  class trong folder admin để dễ làm việc với database trong CSDL
-// include './admin/class/category_class.php';
-
-// $category = new Category();
-
-// $show_category = $category->show_category();
-// $result_category = $show_category->fetch_assoc();
-// echo basename(__FILE__);
-
 if (basename(__FILE__) === "index.php") {
     // Tắt hiển thị lỗi
     ini_set('display_errors', 0);
@@ -70,7 +61,8 @@ if (basename(__FILE__) === "index.php") {
                             while ($result = $show_category->fetch_assoc()) {
                         ?>
                                 <li class="menu__item">
-                                    <a href="#!" class="menu__link"><?php echo $result['category_name']; ?></a>
+                                    <a href="http://localhost/clone-Ivy/category.php?category_id=<?php echo $result['category_id'] ?>"
+                                        class="menu__link"><?php echo $result['category_name']; ?></a>
                                     <ul class="sub-menu">
                                         <?php
                                         $show_brand = $brand->show_brand();
@@ -79,7 +71,8 @@ if (basename(__FILE__) === "index.php") {
                                         ?>
                                                 <?php if ($result['category_id'] === $resultA['category_id']) { ?>
                                                     <li class="sub-menu__item">
-                                                        <a href="#!" class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
+                                                        <a href="http://localhost/clone-Ivy/category.php?brand_id=<?php echo $resultA['brand_id'] ?>&category_id=<?php echo $resultA['category_id'] ?>"
+                                                            class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
                                                         <ul class="sub-menu-clone">
                                                             <?php $show_product = $product->show_product();
                                                             if ($show_product) {
@@ -87,7 +80,8 @@ if (basename(__FILE__) === "index.php") {
                                                                     if ($resultA['brand_id'] === $resultB['brand_id']) {
                                                             ?>
                                                                         <li class="sub-menu-clone__item">
-                                                                            <a href="#!" class="sub-menu-clone__link">
+                                                                            <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $resultB['product_id'] ?>&brand_id=<?php echo $resultB['brand_id'] ?>&category_id=<?php echo $resultB['category_id'] ?>"
+                                                                                class="sub-menu-clone__link">
                                                                                 <?php echo $resultB['product_name']; ?>
                                                                             </a>
                                                                         </li>
@@ -120,11 +114,79 @@ if (basename(__FILE__) === "index.php") {
 
                 <div class="other">
                     <ul class="other__list">
-                        <li class="other__item">
-                            <input type="text" name="" id="" class="search-box" placeholder="Tìm kiếm" />
-                            <a href="#!">
-                                <img src="./assets/icons/search.svg" alt="" class="search-icon" />
-                            </a>
+                        <li class="other__item" style="position: relative;">
+                            <form method="post">
+                                <input type="text" name="content" id="search-input" class="search-box"
+                                    placeholder="Tìm kiếm" />
+                                <button type="submit" name="btn-search">
+                                    <img src="./assets/icons/search.svg" alt="" class="search-icon" />
+                                </button>
+                            </form>
+                            <br>
+                            <!-- Lấy nội dung phần tìm kiếm -->
+                            <?php
+                            if (isset($_POST['btn-search'])) {
+                                $content = $_POST['content'];
+                                // echo $content;
+                            } else {
+                                $content = false;
+                            }
+                            ?>
+                            <div id="search-table"
+                                style="position: absolute; top:35px;max-height: 150px; overflow-y:auto;">
+                                <table class="item-search__list"
+                                    style="font-size: 1.1rem; background: #fff; text-align: center;">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Giá sản phẩm</th>
+                                            <th>Giá sau khi giảm</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <?php
+                                        // Bắt đầu sử dụng truy vấn để lấy sản phẩm
+                                        $show_product_by_content = $product->get_product_by_content($content);
+                                        if ($show_product_by_content) {
+                                            while ($result = $show_product_by_content->fetch_assoc()) {
+                                        ?>
+                                                <tr class="item-search__item">
+
+                                                    <td class="item-search__name"><a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><?php echo $result['product_name'] ?></a>
+                                                    </td>
+                                                    <td style="display: flex; align-items:center; justify-content: center;">
+                                                        <a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                            <img style="width: 50px; object-fit:contain; "
+                                                                src="./admin/uploads/<?php echo $result['product_img'] ?>"
+                                                                alt="">
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                            <?php echo $result['product_price'] ?>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                            <?php echo $result['product_price_sale'] ?>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </li>
                         <li class="other__item">
                             <a href="#!" class="other__link">
@@ -236,6 +298,25 @@ if (basename(__FILE__) === "index.php") {
             header.classList.add("sticky");
         } else {
             header.classList.remove("sticky");
+        }
+    });
+
+    // Ẩn hiện bảng thanh tìm kiếm
+    // Lấy tham chiếu đến ô tìm kiếm và bảng
+    const searchInput = document.getElementById('search-input');
+    const searchTable = document.getElementById('search-table');
+
+    // Thêm sự kiện khi người dùng nhập vào ô tìm kiếm
+    searchInput.addEventListener('change', function() {
+        const value = searchInput.value.trim(); // Lấy giá trị người dùng nhập
+        console.log(value);
+        if (value !== "") {
+            console.log(value);
+            // Hiển thị bảng nếu có nội dung
+            searchTable.style.display = "block";
+        } else {
+            // Ẩn bảng nếu không có nội dung
+            searchTable.style.display = "none";
         }
     });
 </script>

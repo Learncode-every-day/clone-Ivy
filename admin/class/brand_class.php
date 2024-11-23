@@ -32,7 +32,7 @@ class Brand
     public function show_brand()
     {
         // $query = "SELECT * FROM table_brand ORDER BY brand_id DESC";
-        $query = "SELECT table_brand.*, table_category.category_name FROM table_brand INNER JOIN table_category ON table_brand.category_id = table_category.category_id ORDER BY  table_brand.brand_id DESC";
+        $query = "SELECT table_brand.*, table_category.category_name, table_category.category_id FROM table_brand INNER JOIN table_category ON table_brand.category_id = table_category.category_id ORDER BY  table_brand.brand_id";
         $result = $this->db->select($query);
         return $result;
     }

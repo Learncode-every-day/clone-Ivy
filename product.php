@@ -55,285 +55,54 @@ if (basename(__FILE__) === "product.php") {
             <div class="header__inner">
                 <div class="menu">
                     <ul class="menu__list">
+                        <?php
+                        $show_category = $category->show_category();
+                        if ($show_category) {
+                            while ($result = $show_category->fetch_assoc()) {
+                        ?>
                         <li class="menu__item">
-                            <a href="#!" class="menu__link">Nữ</a>
+                            <a href="http://localhost/clone-Ivy/product.php?category_id=<?php echo $result['category_id'] ?>"
+                                class="menu__link"><?php echo $result['category_name']; ?></a>
                             <ul class="sub-menu">
+                                <?php
+                                        $show_brand = $brand->show_brand();
+                                        if ($show_brand) {
+                                            while ($resultA = $show_brand->fetch_assoc()) {
+                                        ?>
+                                <?php if ($result['category_id'] === $resultA['category_id']) { ?>
                                 <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Hàng mới về</a>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Collection</a>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Áo</a>
+                                    <a href="http://localhost/clone-Ivy/product.php?brand_id=<?php echo $resultA['brand_id'] ?>"
+                                        class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
                                     <ul class="sub-menu-clone">
+                                        <?php $show_product = $product->show_product();
+                                                            if ($show_product) {
+                                                                while ($resultB = $show_product->fetch_assoc()) {
+                                                                    if ($resultA['brand_id'] === $resultB['brand_id']) {
+                                                            ?>
                                         <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo sơ mi</a>
+                                            <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $resultB['product_id'] ?>"
+                                                class="sub-menu-clone__link">
+                                                <?php echo $resultB['product_name']; ?>
+                                            </a>
                                         </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo thun</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo croptop</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo peplum</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo len</a>
-                                        </li>
+                                        <?php
+                                                                    }
+                                                                }
+                                                            }
+                                                            ?>
                                     </ul>
                                 </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Đầm / Áo dài</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Váy đầm nữ</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đầm công sở</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đầm voan hoa / maxi</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đầm thun</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo dài</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Áo khoác</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo vest / blazer</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo dạ / măng tô</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Set bộ</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Set bộ công sở</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Set bộ co-ords</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Set bộ thun / len</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Quần & Jumpsuit</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Quần dài</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Quần jeans</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Quần lửng / short</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Jumpsuit</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Chân váy</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Chân váy bút chì</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Chân váy chữ A</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Chân váy jeans</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Senora</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Senora - Đầm dạ hội</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Phụ kiện</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đồ lót</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Phụ kiện</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Giày / dép & Sandals</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Túi / ví</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                <?php } ?>
+                                <?php
+                                            }
+                                        }
+                                        ?>
                             </ul>
                         </li>
-                        <li class="menu__item">
-                            <a href="#!" class="menu__link">Nam</a>
-                            <ul class="sub-menu">
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Hàng mới về</a>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Collection</a>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Áo</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo sơ mi</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo thun</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo croptop</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo peplum</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo len</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Đầm / Áo dài</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Váy đầm nữ</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đầm công sở</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đầm voan hoa / maxi</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đầm thun</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo dài</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Áo khoác</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo vest / blazer</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Áo dạ / măng tô</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Set bộ</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Set bộ công sở</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Set bộ co-ords</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Set bộ thun / len</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Quần & Jumpsuit</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Quần dài</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Quần jeans</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Quần lửng / short</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Jumpsuit</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Chân váy</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Chân váy bút chì</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Chân váy chữ A</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Chân váy jeans</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Senora</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Senora - Đầm dạ hội</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="sub-menu__item">
-                                    <a href="#!" class="sub-menu__link">Phụ kiện</a>
-                                    <ul class="sub-menu-clone">
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Đồ lót</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Phụ kiện</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Giày / dép & Sandals</a>
-                                        </li>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="#!" class="sub-menu-clone__link">Túi / ví</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#!" class="menu__link">Trẻ em</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#!" class="menu__link">Sale</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#!" class="menu__link">Khẩu Trang</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#!" class="menu__link">Bộ sưu tập</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#!" class="menu__link">Thông tin</a>
-                        </li>
+                        <?php
+                            }
+                        }
+                        ?>
                     </ul>
                 </div>
 
@@ -375,7 +144,7 @@ if (basename(__FILE__) === "product.php") {
         <div class="container">
             <div class="product-top row">
                 <p>
-                    Trang chủ <span>&rarr;</span> Nữ
+                    Trang chủ <span>&rarr;</span>Nữ
                     <span>&rarr;</span> Hàng nữ mới <span>&rarr;</span> Áo
                     thun cổ tròn
                 </p>
@@ -383,7 +152,7 @@ if (basename(__FILE__) === "product.php") {
             <div class="product-content row">
                 <div class="product-content-left row">
                     <div class="product-content-left__big-img">
-                        <img src="./assets/img/category-img/pic1_1.jpg" alt="" />
+                        <img src="./assets/img/category-img/<?php echo "1";?>" alt="" />
                     </div>
                     <div class="product-content-left__small-img">
                         <img src="./assets/img/category-img/pic1_1.jpg" alt="" />

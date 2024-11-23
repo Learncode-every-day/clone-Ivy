@@ -4,3 +4,6 @@ itemSliderBar.forEach(function (menu, index) {
         menu.classList.toggle("block");
     });
 });
+
+const changeCategory = document.querySelector("#sort");
+console.log(changeCategory);
