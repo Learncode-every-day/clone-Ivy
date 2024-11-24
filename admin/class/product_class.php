@@ -93,6 +93,17 @@ class Product
 
     public function delete_product($product_id)
     {
+        $new_product = new Product();
+        var_dump(1);
+        $show_new_product = $new_product->get_all_img($product_id);
+        if ($show_new_product) {
+            while ($resultA = $show_new_product->fetch_assoc()) {
+                // var_dump($resultA['product_img_desc']);
+                $link_pictures = "./uploads/" . $resultA['product_img_desc'];
+                unlink($link_pictures);
+                // var_dump($resultA['product_img_desc']);
+            }
+        }
         $query = "DELETE table_product, table_product_img_desc 
     FROM table_product 
     JOIN table_product_img_desc 
@@ -173,9 +184,9 @@ WHERE p.product_id = '$category_id';
 
     // Lấy toàn bộ ảnh trong bảng table_product_img_desc
 
-    public function get_all_img()
+    public function get_all_img($product_id)
     {
-        $query = "SELECT table_product_img_desc_*, table_product.product_id FROM table_product ON table_product_img_desc.product_id = table_product.product_id ORDER BY table_product.product_id DESC";
+        $query = "SELECT table_product_img_desc.*, table_product.product_id FROM table_product_img_desc INNER JOIN table_product ON table_product_img_desc.product_id = table_product.product_id WHERE table_product_img_desc.product_id = '$product_id' ORDER BY table_product_img_desc.product_id DESC";
         $result = $this->db->select($query);
         return $result;
     }
