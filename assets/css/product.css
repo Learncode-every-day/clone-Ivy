@@ -7,8 +7,11 @@
 }
 
 .product-top p {
+    text-transform: uppercase;
     margin: 0 12px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #595e5b;
 }
 
 .product-content-right,
@@ -221,6 +224,10 @@
 }
 
 .product-content-right-bottom-content-sub {
+    display: none;
+}
+
+.product-content-right-bottom-content-size {
     display: none;
 }
 

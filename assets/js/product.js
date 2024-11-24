@@ -14,9 +14,10 @@ smallImg.forEach(function (imgItem, X) {
 
 const baoquan = document.querySelector(".baoquan");
 const chitiet = document.querySelector(".chitiet");
+const thamkhao = document.querySelector(".thamkhao");
 
 if (baoquan) {
-    baoquan.addEventListener("click", function (e) {
+    baoquan.addEventListener("click", (e) => {
         document.querySelector(
             ".product-content-right-bottom-content-info"
         ).style.display = "none";
@@ -24,11 +25,15 @@ if (baoquan) {
         document.querySelector(
             ".product-content-right-bottom-content-sub"
         ).style.display = "block";
+
+        document.querySelector(
+            ".product-content-right-bottom-content-size"
+        ).style.display = "none";
     });
 }
 
 if (chitiet) {
-    chitiet.addEventListener("click", function () {
+    chitiet.addEventListener("click", () => {
         document.querySelector(
             ".product-content-right-bottom-content-info"
         ).style.display = "block";
@@ -36,6 +41,26 @@ if (chitiet) {
         document.querySelector(
             ".product-content-right-bottom-content-sub"
         ).style.display = "none";
+
+        document.querySelector(
+            ".product-content-right-bottom-content-size"
+        ).style.display = "none";
+    });
+}
+
+if (thamkhao) {
+    thamkhao.addEventListener("click", () => {
+        document.querySelector(
+            ".product-content-right-bottom-content-info"
+        ).style.display = "none";
+
+        document.querySelector(
+            ".product-content-right-bottom-content-sub"
+        ).style.display = "none";
+
+        document.querySelector(
+            ".product-content-right-bottom-content-size"
+        ).style.display = "block";
     });
 }
 

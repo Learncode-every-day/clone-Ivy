@@ -4,6 +4,31 @@
     box-sizing: border-box;
 }
 
+/* Edit scroll */
+
+/* Tùy chỉnh cho phần thân của thanh cuộn */
+::-webkit-scrollbar {
+    width: 12px; /* Đặt chiều rộng của thanh cuộn dọc */
+    height: 12px; /* Đặt chiều cao của thanh cuộn ngang */
+}
+
+/* Tùy chỉnh cho phần đường ray của thanh cuộn */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Màu nền của thanh ray */
+    border-radius: 10px;
+}
+
+/* Tùy chỉnh cho phần thanh cuộn thực tế */
+::-webkit-scrollbar-thumb {
+    background: #888; /* Màu của thanh cuộn */
+    border-radius: 10px;
+}
+
+/* Tùy chỉnh khi di chuột qua thanh cuộn */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Màu của thanh cuộn khi hover */
+}
+
 html {
     font-size: 62.5%;
     scroll-behavior: smooth;
@@ -427,4 +452,40 @@ button {
     justify-content: center;
     width: 54px;
     height: 50px;
+}
+
+/* Style tổng thể cho bảng */
+table {
+    width: 100%; /* Bảng chiếm toàn bộ chiều ngang */
+    border-collapse: collapse; /* Gộp các viền bảng */
+    margin: 20px 0; /* Thêm khoảng cách phía trên và dưới */
+    font-size: 16px;
+    text-align: left;
+}
+
+/* Style tiêu đề bảng */
+th {
+    background-color: #4caf50; /* Màu nền */
+    color: white; /* Màu chữ */
+    padding: 10px; /* Khoảng cách bên trong ô */
+}
+
+/* Style các ô dữ liệu */
+td {
+    padding: 10px; /* Khoảng cách bên trong ô */
+    border: 1px solid #ddd; /* Viền mỏng cho ô */
+}
+
+/* Style hàng xen kẽ */
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Màu nền cho hàng chẵn */
+}
+
+tr:hover {
+    background-color: #ddd; /* Màu nền khi hover */
+}
+
+.item-search__item td {
+    justify-items: center;
+    align-content: center;
 }

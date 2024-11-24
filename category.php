@@ -116,18 +116,79 @@ if (basename(__FILE__) === "category.php") {
 
                 <div class="other">
                     <ul class="other__list">
-                        <li class="other__item">
-                            <form method="post">
-                                <input type="text" name="" id="" class="search-box" placeholder="Tìm kiếm" />
-                                <button type="submit" name="btn-search">
+                        <li class="other__item" style="position: relative;">
+                            <form method="post" id="form-search">
+                                <input type="text" name="content" id="search-input" class="search-box"
+                                    placeholder="Tìm kiếm" />
+                                <button type="submit" name="btn-search" id="btn-search">
                                     <img src="./assets/icons/search.svg" alt="" class="search-icon" />
                                 </button>
                             </form>
+                            <br>
+                            <!-- Lấy nội dung phần tìm kiếm -->
                             <?php
                             if (isset($_POST['btn-search'])) {
-                                echo "Lấy dữ liệu";
+                                $content = $_POST['content'];
+                                // echo $content;
+                            } else {
+                                $content = false;
                             }
                             ?>
+                            <div hidden id="search-table"
+                                style="display: none; position: absolute; top:35px;max-height: 250px; overflow-y:auto;">
+                                <table class="item-search__list"
+                                    style="font-size: 1.1rem; background: #fff; text-align: center;">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Giá sản phẩm</th>
+                                            <th>Giá sau khi giảm</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <?php
+                                        // Bắt đầu sử dụng truy vấn để lấy sản phẩm
+                                        $show_product_by_content = $product->get_product_by_content($content);
+                                        if ($show_product_by_content) {
+                                            while ($result = $show_product_by_content->fetch_assoc()) {
+                                        ?>
+                                        <tr class="item-search__item">
+
+                                            <td class="item-search__name"><a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><?php echo $result['product_name'] ?></a>
+                                            </td>
+                                            <td style="display: flex; align-items:center; justify-content: center;">
+                                                <a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                    <img style="width: 50px; object-fit:contain; "
+                                                        src="./admin/uploads/<?php echo $result['product_img'] ?>"
+                                                        alt="">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                    <?php echo $result['product_price'] ?>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                    <?php echo $result['product_price_sale'] ?>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </li>
                         <li class="other__item">
                             <a href="#!" class="other__link">
@@ -188,7 +249,6 @@ if (basename(__FILE__) === "category.php") {
                         }
                     }
                     ?>
-                    <!-- <span>&rarr;</span> Hàng nữ mới -->
                 </p>
             </div>
         </div>
@@ -294,12 +354,14 @@ if (basename(__FILE__) === "category.php") {
                     ?>
 
                     <div class="category-right-content__item">
-                        <img src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="" />
-                        <h1><?php echo $result['product_name'] ?></h1>
-                        <p><?php
-                                            $get_string_price = $result['product_price'];
-                                            echo strtok($get_string_price, "đ");
-                                            ?><sup>đ</sup></p>
+                        <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                            <img src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="" />
+                            <h1><?php echo $result['product_name'] ?></h1>
+                            <p><?php
+                                                $get_string_price = $result['product_price'];
+                                                echo strtok($get_string_price, "đ");
+                                                ?><sup>đ</sup></p>
+                        </a>
                     </div>
                     <?php
                                 }
@@ -398,5 +460,47 @@ if (basename(__FILE__) === "category.php") {
     </footer>
 </body>
 <script src="./assets/js/category.js"></script>
+<script>
+// Xử lý phần hiển thị bảng tìm kiếm
+const inputSearch = document.getElementById("search-input");
+const tableSearch = document.getElementById("search-table");
+
+inputSearch.addEventListener("input", function() {
+    // console.log("Đã bắt đầu sự kiện");
+    const query = this.value.trim(); // Lấy giá trị người dùng nhập
+    if (query === "") {
+        tableSearch.style.display = "none";
+        return;
+    }
+
+    // Gửi yêu cầu AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "search_handler.php", true); // `search_handler.php` là file xử lý kết quả tìm kiếm
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log("a");
+            console.log(xhr.responseText); // Kiểm tra dữ liệu trả về
+            if (xhr.responseText.trim() !== "") {
+                tableSearch.innerHTML = xhr.responseText;
+                tableSearch.style.display = "block";
+                document.addEventListener("click", function(event) {
+                    // Kiểm tra xem click có phải là ngoài input hoặc bảng tìm kiếm không
+                    if (!tableSearch.contains(event.target) && event.target !== inputSearch) {
+                        tableSearch.style.display = "none"; // Ẩn bảng khi click ra ngoài
+                    }
+                });
+
+            } else {
+                tableSearch.style.display = "none"; // Ẩn bảng nếu không có kết quả
+            }
+        }
+    };
+
+
+    xhr.send(`query=${encodeURIComponent(query)}`);
+});
+</script>
 
 </html>

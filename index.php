@@ -115,10 +115,10 @@ if (basename(__FILE__) === "index.php") {
                 <div class="other">
                     <ul class="other__list">
                         <li class="other__item" style="position: relative;">
-                            <form method="post">
+                            <form method="post" id="form-search">
                                 <input type="text" name="content" id="search-input" class="search-box"
                                     placeholder="Tìm kiếm" />
-                                <button type="submit" name="btn-search">
+                                <button type="submit" name="btn-search" id="btn-search">
                                     <img src="./assets/icons/search.svg" alt="" class="search-icon" />
                                 </button>
                             </form>
@@ -132,8 +132,8 @@ if (basename(__FILE__) === "index.php") {
                                 $content = false;
                             }
                             ?>
-                            <div id="search-table"
-                                style="position: absolute; top:35px;max-height: 150px; overflow-y:auto;">
+                            <div hidden id="search-table"
+                                style="display: none; position: absolute; top:35px;max-height: 250px; overflow-y:auto;">
                                 <table class="item-search__list"
                                     style="font-size: 1.1rem; background: #fff; text-align: center;">
                                     <thead>
@@ -301,23 +301,45 @@ if (basename(__FILE__) === "index.php") {
         }
     });
 
-    // Ẩn hiện bảng thanh tìm kiếm
-    // Lấy tham chiếu đến ô tìm kiếm và bảng
-    const searchInput = document.getElementById('search-input');
-    const searchTable = document.getElementById('search-table');
+    // Xử lý phần hiển thị bảng tìm kiếm
+    const inputSearch = document.getElementById("search-input");
+    const tableSearch = document.getElementById("search-table");
 
-    // Thêm sự kiện khi người dùng nhập vào ô tìm kiếm
-    searchInput.addEventListener('change', function() {
-        const value = searchInput.value.trim(); // Lấy giá trị người dùng nhập
-        console.log(value);
-        if (value !== "") {
-            console.log(value);
-            // Hiển thị bảng nếu có nội dung
-            searchTable.style.display = "block";
-        } else {
-            // Ẩn bảng nếu không có nội dung
-            searchTable.style.display = "none";
+    inputSearch.addEventListener("input", function() {
+        // console.log("Đã bắt đầu sự kiện");
+        const query = this.value.trim(); // Lấy giá trị người dùng nhập
+        if (query === "") {
+            tableSearch.style.display = "none";
+            return;
         }
+
+        // Gửi yêu cầu AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "search_handler.php", true); // `search_handler.php` là file xử lý kết quả tìm kiếm
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("a");
+                console.log(xhr.responseText); // Kiểm tra dữ liệu trả về
+                if (xhr.responseText.trim() !== "") {
+                    tableSearch.innerHTML = xhr.responseText;
+                    tableSearch.style.display = "block";
+                    document.addEventListener("click", function(event) {
+                        // Kiểm tra xem click có phải là ngoài input hoặc bảng tìm kiếm không
+                        if (!tableSearch.contains(event.target) && event.target !== inputSearch) {
+                            tableSearch.style.display = "none"; // Ẩn bảng khi click ra ngoài
+                        }
+                    });
+
+                } else {
+                    tableSearch.style.display = "none"; // Ẩn bảng nếu không có kết quả
+                }
+            }
+        };
+
+
+        xhr.send(`query=${encodeURIComponent(query)}`);
     });
 </script>
 

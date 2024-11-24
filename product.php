@@ -16,6 +16,17 @@ if (basename(__FILE__) === "product.php") {
     $category = new Category();
     $brand = new Brand();
     $product = new Product();
+    $get_product_id = $_GET['product_id'];
+    $show_all_product = $product->show_product();
+    if ($show_all_product) {
+        while ($result = $show_all_product->fetch_assoc()) {
+            // echo $result['product_name'];
+            if ($result['product_id'] === $get_product_id) {
+                $get_category_id = $result['category_id'];
+                $get_brand_id = $result['brand_id'];
+            }
+        }
+    }
 }
 
 ?>
@@ -60,45 +71,45 @@ if (basename(__FILE__) === "product.php") {
                         if ($show_category) {
                             while ($result = $show_category->fetch_assoc()) {
                         ?>
-                        <li class="menu__item">
-                            <a href="http://localhost/clone-Ivy/product.php?category_id=<?php echo $result['category_id'] ?>"
-                                class="menu__link"><?php echo $result['category_name']; ?></a>
-                            <ul class="sub-menu">
-                                <?php
+                                <li class="menu__item">
+                                    <a href="http://localhost/clone-Ivy/category.php?category_id=<?php echo $result['category_id'] ?>"
+                                        class="menu__link"><?php echo $result['category_name']; ?></a>
+                                    <ul class="sub-menu">
+                                        <?php
                                         $show_brand = $brand->show_brand();
                                         if ($show_brand) {
                                             while ($resultA = $show_brand->fetch_assoc()) {
                                         ?>
-                                <?php if ($result['category_id'] === $resultA['category_id']) { ?>
-                                <li class="sub-menu__item">
-                                    <a href="http://localhost/clone-Ivy/product.php?brand_id=<?php echo $resultA['brand_id'] ?>"
-                                        class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
-                                    <ul class="sub-menu-clone">
-                                        <?php $show_product = $product->show_product();
+                                                <?php if ($result['category_id'] === $resultA['category_id']) { ?>
+                                                    <li class="sub-menu__item">
+                                                        <a href="http://localhost/clone-Ivy/category.php?brand_id=<?php echo $resultA['brand_id'] ?>&category_id=<?php echo $resultA['category_id'] ?>"
+                                                            class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
+                                                        <ul class="sub-menu-clone">
+                                                            <?php $show_product = $product->show_product();
                                                             if ($show_product) {
                                                                 while ($resultB = $show_product->fetch_assoc()) {
                                                                     if ($resultA['brand_id'] === $resultB['brand_id']) {
                                                             ?>
-                                        <li class="sub-menu-clone__item">
-                                            <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $resultB['product_id'] ?>"
-                                                class="sub-menu-clone__link">
-                                                <?php echo $resultB['product_name']; ?>
-                                            </a>
-                                        </li>
-                                        <?php
+                                                                        <li class="sub-menu-clone__item">
+                                                                            <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $resultB['product_id'] ?>&brand_id=<?php echo $resultB['brand_id'] ?>&category_id=<?php echo $resultB['category_id'] ?>"
+                                                                                class="sub-menu-clone__link">
+                                                                                <?php echo $resultB['product_name']; ?>
+                                                                            </a>
+                                                                        </li>
+                                                            <?php
                                                                     }
                                                                 }
                                                             }
                                                             ?>
-                                    </ul>
-                                </li>
-                                <?php } ?>
-                                <?php
+                                                        </ul>
+                                                    </li>
+                                                <?php } ?>
+                                        <?php
                                             }
                                         }
                                         ?>
-                            </ul>
-                        </li>
+                                    </ul>
+                                </li>
                         <?php
                             }
                         }
@@ -114,11 +125,79 @@ if (basename(__FILE__) === "product.php") {
 
                 <div class="other">
                     <ul class="other__list">
-                        <li class="other__item">
-                            <input type="text" name="" id="" class="search-box" placeholder="Tìm kiếm" />
-                            <a href="#!">
-                                <img src="./assets/icons/search.svg" alt="" class="search-icon" />
-                            </a>
+                        <li class="other__item" style="position: relative;">
+                            <form method="post" id="form-search">
+                                <input type="text" name="content" id="search-input" class="search-box"
+                                    placeholder="Tìm kiếm" />
+                                <button type="submit" name="btn-search" id="btn-search">
+                                    <img src="./assets/icons/search.svg" alt="" class="search-icon" />
+                                </button>
+                            </form>
+                            <br>
+                            <!-- Lấy nội dung phần tìm kiếm -->
+                            <?php
+                            if (isset($_POST['btn-search'])) {
+                                $content = $_POST['content'];
+                                // echo $content;
+                            } else {
+                                $content = false;
+                            }
+                            ?>
+                            <div hidden id="search-table"
+                                style="display: none; position: absolute; top:35px;max-height: 250px; overflow-y:auto;">
+                                <table class="item-search__list"
+                                    style="font-size: 1.1rem; background: #fff; text-align: center;">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Giá sản phẩm</th>
+                                            <th>Giá sau khi giảm</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        <?php
+                                        // Bắt đầu sử dụng truy vấn để lấy sản phẩm
+                                        $show_product_by_content = $product->get_product_by_content($content);
+                                        if ($show_product_by_content) {
+                                            while ($result = $show_product_by_content->fetch_assoc()) {
+                                        ?>
+                                                <tr class="item-search__item">
+
+                                                    <td class="item-search__name"><a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><?php echo $result['product_name'] ?></a>
+                                                    </td>
+                                                    <td style="display: flex; align-items:center; justify-content: center;">
+                                                        <a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                            <img style="width: 50px; object-fit:contain; "
+                                                                src="./admin/uploads/<?php echo $result['product_img'] ?>"
+                                                                alt="">
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                            <?php echo $result['product_price'] ?>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                            <?php echo $result['product_price_sale'] ?>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </li>
                         <li class="other__item">
                             <a href="#!" class="other__link">
@@ -144,81 +223,141 @@ if (basename(__FILE__) === "product.php") {
         <div class="container">
             <div class="product-top row">
                 <p>
-                    Trang chủ <span>&rarr;</span>Nữ
-                    <span>&rarr;</span> Hàng nữ mới <span>&rarr;</span> Áo
-                    thun cổ tròn
+                    Trang chủ <span>&rarr;</span>
+                    <?php
+
+                    $show_category = $category->show_category();
+                    if ($show_category) {
+                        while ($resultA = $show_category->fetch_assoc()) {
+                            // var_dump($resultA['category_name']);
+                            if ($get_category_id) {
+                                if ($resultA['category_id'] === $get_category_id) {
+                                    echo $resultA['category_name'];
+                                    if ($get_brand_id) {
+                                        $show_brand = $brand->show_brand();
+                                        if ($show_brand) {
+                                            while ($resultB = $show_brand->fetch_assoc()) {
+                                                if ($resultB['brand_id'] === $get_brand_id) {
+                                                    echo "<span>&rarr;</span>" . $resultB['brand_name'];
+                                                    if ($get_product_id) {
+                                                        $show_product = $product->show_product();
+                                                        while ($resultC = $show_product->fetch_assoc()) {
+                                                            if ($resultC['product_id'] === $get_product_id) {
+                                                                echo "<span>&rarr;</span>" . $resultC['product_name'];
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    ?>
+                    <!-- <span>&rarr;</span> Hàng nữ mới -->
                 </p>
             </div>
             <div class="product-content row">
                 <div class="product-content-left row">
-                    <div class="product-content-left__big-img">
-                        <img src="./assets/img/category-img/<?php echo "1";?>" alt="" />
-                    </div>
-                    <div class="product-content-left__small-img">
-                        <img src="./assets/img/category-img/pic1_1.jpg" alt="" />
-                        <img src="./assets/img/category-img/pic1_2.jpg" alt="" />
+                    <?php
+                    $show_product = $product->show_product();
+                    if ($show_product) {
+                        while ($result = $show_product->fetch_assoc()) {
+                            if ($result['product_id'] === $get_product_id) {
+                    ?>
+                                <div class="product-content-left__big-img">
+                                    <img src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="" />
+                                </div>
+                    <?php
+                            }
+                        }
+                    }
+                    ?>
+                    <div class="product-content-left__small-img" style="max-height: 642px; overflow-y: auto;">
+                        <?php
+                        $get_img = $product->get_img($get_product_id);
+                        if ($get_img) {
+                            while ($result = $get_img->fetch_assoc()) {
+                        ?>
+                                <img src="./admin/uploads/<?php echo $result['product_img_desc'] ?>" alt="" />
+
+                        <?php
+                            }
+                        }
+                        ?>
+                        <!-- <img src="./assets/img/category-img/pic1_2.jpg" alt="" />
                         <img src="./assets/img/category-img/pic1_3.jpg" alt="" />
-                        <img src="./assets/img/category-img/pic1_4.jpg" alt="" />
+                        <img src="./assets/img/category-img/pic1_4.jpg" alt="" /> -->
                     </div>
                 </div>
                 <div class="product-content-right">
                     <div class="product-content-right__product-name">
-                        <h1>Áo thun cổ tròn MS 57e2969</h1>
-                        <p>MSP: 57e2969</p>
-                        <div class="product-content-right__product-price">
-                            <p>1.500.000 <sup>đ</sup></p>
-                        </div>
-                        <div class="product-content-right__product-color">
-                            <span style="font-weight: bold">Màu sắc</span>:
-                            Xanh Cổ Vịt Nhạt
-                            <span style="color: red">*</span>
-                            <div class="product-content-right__product-color-img">
-                                <img src="./assets/img/color.jpg" alt="" />
-                            </div>
-                        </div>
-                        <div class="product-content-right__product-size">
-                            <p style="font-weight: bold">Size:</p>
-                            <div class="size">
-                                <span>S</span>
-                                <span>M</span>
-                                <span>L</span>
-                                <span>XL</span>
-                                <span>XXL</span>
-                            </div>
-                        </div>
-                        <div class="quantity">
-                            <p style="font-weight: bold">Số lượng:</p>
-                            <input type="number" name="" id="" min="0" value="1" />
-                            <p style="
+                        <?php
+                        $show_product = $product->show_product();
+                        if ($show_product) {
+                            while ($result = $show_product->fetch_assoc()) {
+                                if ($result['product_id'] === $get_product_id) {
+                        ?>
+                                    <h1><?php echo $result['product_name'] ?></h1>
+
+                                    <div class="product-content-right__product-price">
+                                        <p>
+                                            <?php
+                                            $get_string_price = $result['product_price'];
+                                            echo strtok($get_string_price, "đ");
+                                            ?>
+                                            <sup>đ</sup>
+                                        </p>
+                                    </div>
+                                    <div class="quantity">
+                                        <p style="font-weight: bold">Số lượng:</p>
+                                        <input type="number" name="count" id="" min="0" value="1" />
+                                        <p style="
                                         color: red;
                                         width: 100%;
                                         margin-top: 5px;
                                     ">
-                                Vui lòng chọn size *
-                            </p>
-                        </div>
+                                        </p>
+                                    </div>
+                        <?php
+                                }
+                            }
+                        }
+                        ?>
                         <div class="product-content-right__product-button">
-                            <button>
-                                <img src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
-                                <p>Mua hàng</p>
-                            </button>
-                            <button>
+                            <a href="http://localhost/clone-Ivy/payment.html">
+                                <button>
+                                    <img src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
+                                    <p>Mua hàng</p>
+                                </button>
+                            </a>
+                            <!-- <button>
                                 <p>Tìm tại cửa hàng</p>
-                            </button>
+                            </button> -->
                         </div>
                         <div class="product-content-right__product-icon">
-                            <div class="product-content-right__product-icon-item">
-                                <img src="./assets/icons/phone.svg" alt="" class="phone-icon" />
-                                <p>Hotline</p>
-                            </div>
-                            <div class="product-content-right__product-icon-item">
-                                <img src="./assets/icons/comment.svg" alt="" class="comment-icon" />
-                                <p>Chat</p>
-                            </div>
-                            <div class="product-content-right__product-icon-item">
-                                <img src="./assets/icons/envelop.svg" alt="" class="envelop-icon" />
-                                <p>Mail</p>
-                            </div>
+                            <a href="tel:099999999">
+                                <div class="product-content-right__product-icon-item">
+                                    <img src="./assets/icons/phone.svg" alt="" class="phone-icon" />
+                                    <p>Hotline</p>
+                                </div>
+                            </a>
+                            <a href="#!">
+                                <div class="product-content-right__product-icon-item">
+                                    <img src="./assets/icons/comment.svg" alt="" class="comment-icon" />
+                                    <p>Chat</p>
+                                </div>
+                            </a>
+                            <a href="mailto:a@gmail.com">
+                                <div class="product-content-right__product-icon-item">
+                                    <img src="./assets/icons/envelop.svg" alt="" class="envelop-icon" />
+                                    <p>Mail</p>
+                                </div>
+                            </a>
                         </div>
                         <div class="product-content-right-product-QR">
                             <img style="
@@ -239,31 +378,29 @@ if (basename(__FILE__) === "product.php") {
                                     <div class="product-content-right-bottom-content-title-item baoquan">
                                         <p>Bảo quản</p>
                                     </div>
-                                    <div class="product-content-right-bottom-content-title-item">
+                                    <div class="product-content-right-bottom-content-title-item thamkhao">
                                         <p>Tham khảo size</p>
                                     </div>
                                 </div>
                                 <div class="product-content-right-bottom-content">
                                     <div class="product-content-right-bottom-content-info">
-                                        Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit.
-                                        Laboriosam quaerat recusandae beatae
-                                        architecto accusamus id aut illo,
-                                        eligendi aliquid incidunt?
-                                        Praesentium eligendi sunt nostrum
-                                        optio minus veritatis aut architecto
-                                        earum? Chi tiết
+                                        <?php
+                                        $show_product = $product->show_product();
+                                        if ($show_product) {
+                                            while ($result = $show_product->fetch_assoc()) {
+                                                if ($result['product_id'] === $get_product_id) {
+                                                    echo $result['product_desc'];
+                                                }
+                                            }
+                                        }
+                                        ?>
                                     </div>
                                     <div class="product-content-right-bottom-content-sub">
-                                        Lorem ipsum dolor sit amet
-                                        consectetur adipisicing elit. Eaque
-                                        aliquid doloremque quia quam ratione
-                                        voluptate? Accusamus, eaque labore?
-                                        A soluta quod quae, unde nulla optio
-                                        deserunt praesentium quaerat ut
-                                        dolorum? Bảo quản
+                                        Bảo quản
                                     </div>
-                                    <div class="product-content-right-bottom-content-size"></div>
+                                    <div class="product-content-right-bottom-content-size">
+                                        Tham khảo size
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -369,5 +506,47 @@ if (basename(__FILE__) === "product.php") {
     </footer>
 </body>
 <script src="./assets/js/product.js"></script>
+<script>
+    // Xử lý phần hiển thị bảng tìm kiếm
+    const inputSearch = document.getElementById("search-input");
+    const tableSearch = document.getElementById("search-table");
+
+    inputSearch.addEventListener("input", function() {
+        // console.log("Đã bắt đầu sự kiện");
+        const query = this.value.trim(); // Lấy giá trị người dùng nhập
+        if (query === "") {
+            tableSearch.style.display = "none";
+            return;
+        }
+
+        // Gửi yêu cầu AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "search_handler.php", true); // `search_handler.php` là file xử lý kết quả tìm kiếm
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("a");
+                console.log(xhr.responseText); // Kiểm tra dữ liệu trả về
+                if (xhr.responseText.trim() !== "") {
+                    tableSearch.innerHTML = xhr.responseText;
+                    tableSearch.style.display = "block";
+                    document.addEventListener("click", function(event) {
+                        // Kiểm tra xem click có phải là ngoài input hoặc bảng tìm kiếm không
+                        if (!tableSearch.contains(event.target) && event.target !== inputSearch) {
+                            tableSearch.style.display = "none"; // Ẩn bảng khi click ra ngoài
+                        }
+                    });
+
+                } else {
+                    tableSearch.style.display = "none"; // Ẩn bảng nếu không có kết quả
+                }
+            }
+        };
+
+
+        xhr.send(`query=${encodeURIComponent(query)}`);
+    });
+</script>
 
 </html>
