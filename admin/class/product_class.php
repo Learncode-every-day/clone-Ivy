@@ -283,8 +283,46 @@ WHERE p.product_id = '$category_id';
         //? Kiểm tra xem file đã tồn tại chưa
         $file_ext = strtolower(end($div));
         $product_img = substr(md5(time()), 0, 10) . '.' . $file_ext;
-        $upload_image = "./uploads/" . $product_img;
+        $upload_image = "./uploads/rename/" . $product_img;
         move_uploaded_file($file_tmp, $upload_image);
+        // Đổi tên ảnh theo dạng pic_[category_id]_[brand_id]_time()
+        // Đường dẫn đến file chưa ảnh
+        $directory = "uploads/rename/";
+        $targetFile = "uploads/";
+        // Những đuôi được sử dụng
+        $allowedExtensions = ["jpg", "png", "jpeg", "webp"];
+        $files = scandir($directory);
+
+        if ($files === false) {
+            die("Không thể mở thư mục.");
+        }
+
+        // Duyệt qua từng file trong thư mục
+        foreach ($files as $file) {
+            // Bỏ qua các file đặc biệt '.' và '..'
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            // Lấy đường dẫn đầy đủ của file
+            $filePath = $directory . $file;
+
+            // Kiểm tra nếu là file (không phải thư mục)
+            if (is_file($filePath)) {
+                // Lấy phần đuôi file
+                $fileInfo = pathinfo($file);
+                $fileExtension = strtolower($fileInfo['extension']); // Định dạng file
+
+                // Kiểm tra nếu là file ảnh hợp lệ
+                if (in_array($fileExtension, $allowedExtensions)) {
+                    // Tạo tên mới cho file
+                    $newFileName = "image_" . $category_id . "_" . $brand_id . "_" . time() . "." . $fileExtension;
+                    $newFilePath = $targetFile . $newFileName;
+                    rename($filePath, $newFilePath);
+                    $product_img = $newFileName;
+                }
+            }
+        }
         if (!empty($file_name) && !empty($file_all_name)) {
             $query = "UPDATE table_product SET product_name = '$product_name', brand_id = '$brand_id', category_id = '$category_id',product_price = '$product_price', product_price_sale = '$product_price_sale', product_desc = '$product_desc', product_img = '$product_img' WHERE product_id = '$product_id'";
             $result = $this->db->update($query);
@@ -293,7 +331,46 @@ WHERE p.product_id = '$category_id';
                 $query = "DELETE FROM table_product_img_desc WHERE product_id = '$product_id'";
                 $result = $this->db->delete($query);
                 foreach ($file_all_name as $key => $element) {
-                    move_uploaded_file($file_all_tmp[$key], "./uploads/" . $element);
+                    move_uploaded_file($file_all_tmp[$key], "./uploads/rename/" . $element);
+                    // Đổi tên ảnh theo dạng pic_[category_id]_[brand_id]_time()
+                    // Đường dẫn đến file chưa ảnh
+                    $directory = "uploads/rename/";
+                    $targetFile = "uploads/";
+
+                    // Những đuôi được sử dụng
+                    $allowedExtensions = ["jpg", "png", "jpeg", "webp"];
+                    $files = scandir($directory);
+
+                    if ($files === false) {
+                        die("Không thể mở thư mục.");
+                    }
+
+                    // Duyệt qua từng file trong thư mục
+                    foreach ($files as $file) {
+                        // Bỏ qua các file đặc biệt '.' và '..'
+                        if ($file === '.' || $file === '..') {
+                            continue;
+                        }
+
+                        // Lấy đường dẫn đầy đủ của file
+                        $filePath = $directory . $file;
+
+                        // Kiểm tra nếu là file (không phải thư mục)
+                        if (is_file($filePath)) {
+                            // Lấy phần đuôi file
+                            $fileInfo = pathinfo($file);
+                            $fileExtension = strtolower($fileInfo['extension']); // Định dạng file
+
+                            // Kiểm tra nếu là file ảnh hợp lệ
+                            if (in_array($fileExtension, $allowedExtensions)) {
+                                // Tạo tên mới cho file
+                                $newFileName = "image_desc_" . $category_id . "_" . $brand_id . "_" . uniqid() . "_" . time() . "." . $fileExtension;
+                                $newFilePath = $targetFile . $newFileName;
+                                rename($filePath, $newFilePath);
+                                $element = $newFileName;
+                            }
+                        }
+                    }
                     $query = "INSERT INTO table_product_img_desc(product_id, product_img_desc) VALUES ('$product_id', '$element')";
                     $result = $this->db->insert($query);
                 }
