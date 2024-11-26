@@ -1,3 +1,29 @@
+<?php
+include "./admin/database.php";
+include "./admin/class/user_class.php";
+session_start();
+
+// Tắt hiển thị lỗi
+ini_set('display_errors', 0);
+error_reporting(0);  // Tắt tất cả các loại lỗi
+
+// Hoặc chỉ tắt các loại lỗi cảnh báo (warnings)
+ini_set('display_errors', 0);
+error_reporting(E_ERROR | E_PARSE);  // Chỉ hiển thị lỗi nghiêm trọng
+
+$user = new User();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_email = $_POST['email'];
+    $user_pass = $_POST['password'];
+    $check_user = $user->check_user($user_email, $user_pass);
+    if ($check_user) {
+        $_SESSION['myAccount'] = $user_email;
+        header("location: http://localhost/clone-Ivy/index.php");
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 

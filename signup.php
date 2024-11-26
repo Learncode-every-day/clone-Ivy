@@ -1,3 +1,37 @@
+<?php
+include "./admin/database.php";
+include "./admin/class/user_class.php";
+
+// Tắt hiển thị lỗi
+ini_set('display_errors', 0);
+error_reporting(0);  // Tắt tất cả các loại lỗi
+
+// Hoặc chỉ tắt các loại lỗi cảnh báo (warnings)
+ini_set('display_errors', 0);
+error_reporting(E_ERROR | E_PARSE);  // Chỉ hiển thị lỗi nghiêm trọng
+
+$user = new User();
+
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    if ($_POST['password'] === $_POST['confirm_password']) {
+        $user_full_name = $_POST['name'];
+        $user_email = $_POST['email'];
+        $user_password = $_POST['password'];
+        $user_phone =  $_POST['phone'];
+        $insert_user = $user->insert_user($user_full_name, $user_email, $user_phone, $user_password, "user"); ?>
+        <script>
+            const userConfirmed = confirm('Chúc mừng bạn đã đăng ký thành công!!! Vui lòng đăng nhập để vào trang chủ =))');
+            if (userConfirmed) {
+                window.location.href = 'http://localhost/clone-Ivy/login.php';
+            }
+        </script>
+
+<?php
+        echo "";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 

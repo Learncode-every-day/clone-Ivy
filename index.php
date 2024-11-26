@@ -1,5 +1,6 @@
 <?php
 if (basename(__FILE__) === "index.php") {
+    session_start();
     // Tắt hiển thị lỗi
     ini_set('display_errors', 0);
     error_reporting(0);  // Tắt tất cả các loại lỗi
@@ -12,9 +13,16 @@ if (basename(__FILE__) === "index.php") {
     include "./admin/class/category_class.php";
     include "./admin/class/brand_class.php";
     include "./admin/class/product_class.php";
+    include "./admin/class/user_class.php";
     $category = new Category();
     $brand = new Brand();
     $product = new Product();
+    $user = new User();
+}
+
+
+if (!isset($_SESSION['myAccount'])) {
+    header("Location: http://localhost/clone-Ivy/login.php");
 }
 
 ?>
