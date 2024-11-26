@@ -170,12 +170,15 @@ class Product
     public function delete_product($product_id)
     {
         $new_product = new Product();
-        var_dump(1);
+        // var_dump(1);
         $show_new_product = $new_product->get_all_img($product_id);
         if ($show_new_product) {
             while ($resultA = $show_new_product->fetch_assoc()) {
                 // var_dump($resultA['product_img_desc']);
-                $link_pictures = "./uploads/" . $resultA['product_img_desc'];
+                if (isset($resultA['product_img'])) {
+                    unlink("uploads/" . $resultA['product_img']);
+                }
+                $link_pictures = "uploads/" . $resultA['product_img_desc'];
                 unlink($link_pictures);
                 // var_dump($resultA['product_img_desc']);
             }
@@ -262,7 +265,7 @@ WHERE p.product_id = '$category_id';
 
     public function get_all_img($product_id)
     {
-        $query = "SELECT table_product_img_desc.*, table_product.product_id FROM table_product_img_desc INNER JOIN table_product ON table_product_img_desc.product_id = table_product.product_id WHERE table_product_img_desc.product_id = '$product_id' ORDER BY table_product_img_desc.product_id DESC";
+        $query = "SELECT table_product_img_desc.*, table_product.product_id, table_product.product_img FROM table_product_img_desc INNER JOIN table_product ON table_product_img_desc.product_id = table_product.product_id WHERE table_product_img_desc.product_id = '$product_id' ORDER BY table_product_img_desc.product_id DESC";
         $result = $this->db->select($query);
         return $result;
     }
@@ -319,6 +322,14 @@ WHERE p.product_id = '$category_id';
                     $newFileName = "image_" . $category_id . "_" . $brand_id . "_" . time() . "." . $fileExtension;
                     $newFilePath = $targetFile . $newFileName;
                     rename($filePath, $newFilePath);
+                    $new_product = new Product();
+                    $get_product = $new_product->get_product($product_id);
+                    if ($get_product) {
+                        while ($resultPic = $get_product->fetch_assoc()) {
+                            // echo $resultPic['product_img'];
+                            unlink("uploads/" . $resultPic['product_img']);
+                        }
+                    }
                     $product_img = $newFileName;
                 }
             }
@@ -328,8 +339,36 @@ WHERE p.product_id = '$category_id';
             $result = $this->db->update($query);
             // Nếu đã tồn tại để sửa thì tiếp tục xóa và cập nhật lại bảng table_product_img_desc
             if ($result) {
+                $storage_array = [];
+                $new_product = new Product();
+                $get_img_desc = $new_product->show_img_desc();
+                if ($get_img_desc) {
+                    while ($resultPics = $get_img_desc->fetch_assoc()) {
+                        // var_dump($resultPics);
+                        if ($resultPics['product_id'] == $product_id) {
+                            if (!in_array($resultPics['product_img_desc'], $storage_array)) {
+                                array_push($storage_array, $resultPics['product_img_desc']);
+                                // print_r($storage_array);
+                            }
+                            // unlink("uploads/" . $resultPics['product_img_desc']);
+                        }
+                    }
+                }
+                // echo ("<br> Phần tử trong mảng: <br>");
+                // print_r($storage_array);
+
+                foreach ($storage_array as $value) {
+                    // unlink("uploads/" . $value);
+                    // echo ("<br>" . $value . "<br>");
+                    // echo ("Số lượng phần tử trong mảng: " . sizeof($storage_array) . "<br>");
+                    unlink("uploads/" . $value);
+                    // echo "Đã xóa ảnh: " . $value . "thành công!";
+                }
+
                 $query = "DELETE FROM table_product_img_desc WHERE product_id = '$product_id'";
                 $result = $this->db->delete($query);
+
+
                 foreach ($file_all_name as $key => $element) {
                     move_uploaded_file($file_all_tmp[$key], "./uploads/rename/" . $element);
                     // Đổi tên ảnh theo dạng pic_[category_id]_[brand_id]_time()
@@ -347,6 +386,7 @@ WHERE p.product_id = '$category_id';
 
                     // Duyệt qua từng file trong thư mục
                     foreach ($files as $file) {
+
                         // Bỏ qua các file đặc biệt '.' và '..'
                         if ($file === '.' || $file === '..') {
                             continue;
