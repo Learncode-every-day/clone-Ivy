@@ -57,6 +57,7 @@ if (basename(__FILE__) === "product.php") {
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="./assets/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="./assets/css/dropdown.css">
 </head>
 
 <body>
@@ -118,7 +119,7 @@ if (basename(__FILE__) === "product.php") {
                 </div>
 
                 <div class="logo">
-                    <a href="#!">
+                    <a href="#">
                         <img src="./assets/img/logo.png" alt="" class="logo__icon" />
                     </a>
                 </div>
@@ -205,12 +206,44 @@ if (basename(__FILE__) === "product.php") {
                             </a>
                         </li>
                         <li class="other__item">
-                            <a href="#!" class="other__link"><img src="./assets/icons/user.svg" alt=""
-                                    class="user-icon" /></a>
+                            <div class="dropdown">
+                                <div class="dropdown__select">
+                                    <!-- <span class="dropdown_selected">Call to action</span>
+                                    <i class="fa fa-caret-down dropdown__caret"></i> -->
+                                    <a href="#!" class="other__link">
+                                        <img src="./assets/icons/user.svg" alt="" class="user-icon" />
+                                    </a>
+                                </div>
+                                <ul class="dropdown__list">
+                                    <li class="dropdown__item">
+                                        <a href="http://localhost/clone-Ivy/index.php">
+                                            <span class="dropdown__text">Trang chủ</span>
+                                            <i class="fa fa-plus-circle dropdown__icon"></i>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown__item">
+                                        <span class="dropdown__text">Thông tin tài khoản</span>
+                                        <i class="fa fa-plus-circle dropdown__icon"></i>
+                                    </li>
+                                    <li class="dropdown__item">
+                                        <a href="http://localhost/clone-Ivy/logout.php">
+                                            <span class="dropdown__text">Đăng xuất</span>
+                                            <i class="fa fa-plus-circle dropdown__icon"></i>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown__item">
+                                        <a href="http://localhost/clone-Ivy/admin/category-add.php">
+                                            <span class="dropdown__text">Vào trang quản lý</span>
+                                            <i class="fa fa-plus-circle dropdown__icon"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li class="other__item">
-                            <a href="#!" class="other__link"><img src="./assets/icons/cart-shopping.svg" alt=""
-                                    class="cart-icon" /></a>
+                            <a href="http://localhost/clone-Ivy/cart.php" class="other__link"><img
+                                    src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
+                            </a>
                         </li>
                     </ul>
                 </div>

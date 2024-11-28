@@ -1,3 +1,24 @@
+<!-- <script>
+    alert(sessionStorage.getItem('user_role'));
+</script> -->
+
+<?php
+session_start();
+if ($_SESSION['user_role'] == 'admin') {
+    if (!isset($_SESSION['first_visit'])) {
+        echo '<script>alert("Chào mừng " + ' . json_encode($_SESSION['user_full_name']) . ' + " đến với trang quản lý!")</script>';
+        $_SESSION['first_visit'] = true;
+    }
+} else {
+    echo '<script>
+    const confirm1 = confirm("Quyền hạn của bạn không đủ xin vui lòng không ấn lần 2 !?");
+    if(confirm1) {
+        window.location.href="http://localhost/clone-Ivy/index.php";
+    }
+    </script>';
+    $_SESSION['first-visit'] = true;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +29,7 @@
     <link rel="stylesheet" href="./assets/css/styles.css" />
     <link rel="stylesheet" href="./assets/css/category-list.css">
     <link rel="stylesheet" href="./assets/css/product-list.css">
-    <script src="./ckeditor/ckeditor.js"></script>
+    <scri src="./ckeditor/ckeditor.js"></scri>
     <script src="./ckfinder/ckfinder.js"></script>
     <script src="./assets/js/jquery.js"></script>
     <link rel="apple-touch-icon" sizes="57x57" href="../assets/favicons/apple-icon-57x57.png">

@@ -22,7 +22,7 @@ if (basename(__FILE__) === "index.php") {
 
 
 if (!isset($_SESSION['myAccount'])) {
-    header("Location: http://localhost/clone-Ivy/login.php");
+    header("Location: login.php");
 }
 
 ?>
@@ -54,6 +54,10 @@ if (!isset($_SESSION['myAccount'])) {
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="./assets/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <!-- Nhúng Font Awesome từ CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/dropdown.css">
+
 </head>
 
 <body>
@@ -202,12 +206,54 @@ if (!isset($_SESSION['myAccount'])) {
                             </a>
                         </li>
                         <li class="other__item">
-                            <a href="#!" class="other__link"><img src="./assets/icons/user.svg" alt=""
-                                    class="user-icon" /></a>
+                            <div class="dropdown">
+                                <div class="dropdown__select">
+                                    <!-- <span class="dropdown_selected">Call to action</span>
+                                    <i class="fa fa-caret-down dropdown__caret"></i> -->
+                                    <a href="#!" class="other__link">
+                                        <img src="./assets/icons/user.svg" alt="" class="user-icon" />
+                                    </a>
+                                </div>
+                                <ul class="dropdown__list">
+                                    <li class="dropdown__item">
+                                        <a href="http://localhost/clone-Ivy/index.php">
+                                            <span class="dropdown__text">Trang chủ</span>
+                                            <i class="fa fa-plus-circle dropdown__icon"></i>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown__item">
+                                        <span class="dropdown__text">Thông tin tài khoản</span>
+                                        <i class="fa fa-plus-circle dropdown__icon"></i>
+                                    </li>
+                                    <li class="dropdown__item">
+                                        <a href="http://localhost/clone-Ivy/logout.php">
+                                            <span class="dropdown__text">Đăng xuất</span>
+                                            <i class="fa fa-plus-circle dropdown__icon"></i>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown__item">
+                                        <a href="http://localhost/clone-Ivy/admin/category-add.php">
+                                            <span class="dropdown__text">Vào trang quản lý</span>
+                                            <i class="fa fa-plus-circle dropdown__icon"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
-                        <li class="other__item">
-                            <a href="#!" class="other__link"><img src="./assets/icons/cart-shopping.svg" alt=""
-                                    class="cart-icon" /></a>
+                        <li class="other__item other__item-cart">
+                            <div class="dropdown">
+                                <div class="dropdown__select">
+                                    <a href="http://localhost/clone-Ivy/cart.php" class="other__link"><img
+                                            src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
+                                    </a>
+                                </div>
+                                <span class="header-cart__notice">0</span>
+                                <ul class="dropdown__list dropdown__list-cart">
+                                    <li class="dropdown__item">hello</li>
+                                    <li class="dropdown__item">hello</li>
+                                    <li class="dropdown__item">hello</li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -219,7 +265,7 @@ if (!isset($_SESSION['myAccount'])) {
     <section id="slider">
         <div class="container">
             <div class="slider__inner">
-                <!-- Sử dụng aspect ratio để căn ảnh cho dễ responsive -->
+                <!-- Sử dsng aspect ratio để căn ảnh cho dễ responsive -->
                 <div class="aspect-ratio-169">
                     <img src="./assets/img/slider-1.webp" alt="" />
                     <img src="./assets/img/slider-2.webp" alt="" />

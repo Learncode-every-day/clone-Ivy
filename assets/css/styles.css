@@ -8,8 +8,8 @@
 
 /* Tùy chỉnh cho phần thân của thanh cuộn */
 ::-webkit-scrollbar {
-    width: 12px; /* Đặt chiều rộng của thanh cuộn dọc */
-    height: 12px; /* Đặt chiều cao của thanh cuộn ngang */
+    width: 10px; /* Đặt chiều rộng của thanh cuộn dọc */
+    height: 8px; /* Đặt chiều cao của thanh cuộn ngang */
 }
 
 /* Tùy chỉnh cho phần đường ray của thanh cuộn */
@@ -303,6 +303,26 @@ button {
 
 .other__item:last-child::after {
     display: none;
+}
+
+.other__item-cart {
+    position: relative;
+}
+
+.header-cart__notice {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: -2px;
+    font-size: 0.8rem;
+    width: 14px;
+    height: 10px;
+    border-radius: 4px;
+    background: #fff;
+    color: #000;
+    border: 1px solid #6ce8e2;
 }
 
 .search-box {

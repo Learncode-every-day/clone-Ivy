@@ -1,0 +1,56 @@
+/* Phần tử bao bọc sản phẩm */
+.product-item {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Hình ảnh sản phẩm */
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Các nút hành động */
+.action-buttons {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Nút mặc định */
+.action-buttons button {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+    background-color: #c44d27;
+}
+
+/* Hiệu ứng khi hover vào sản phẩm */
+.product-item:hover .product-image {
+    transform: scale(1.1);
+}
+
+.product-item:hover .action-buttons {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

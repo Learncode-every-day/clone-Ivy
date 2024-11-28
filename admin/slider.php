@@ -2,6 +2,9 @@
     <div class="admin-content-left">
         <ul>
             <li>
+                <a href="http://localhost/clone-Ivy/">Quay lại trang chủ</a>
+            </li>
+            <li>
                 <a href="#!">Danh mục</a>
                 <ul>
                     <li>
@@ -31,6 +34,17 @@
                     </li>
                     <li>
                         <a href="product-list.php">Danh sách sản phẩm</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#!">Người dùng</a>
+                <ul>
+                    <li>
+                        <a href="user-add.php">Thêm người dùng</a>
+                    </li>
+                    <li>
+                        <a href="user-list.php">Danh sách người dùng</a>
                     </li>
                 </ul>
             </li>

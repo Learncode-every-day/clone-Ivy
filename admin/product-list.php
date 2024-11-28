@@ -62,7 +62,7 @@ $show_product = $product->show_product();
                                             // var_dump($resultA);
                                             if ($resultA['product_id'] == $result['product_id']) {
                                     ?>
-                                                <img style="height: 50px; object-fit: contain; display:block; padding: 5px;"
+                                                <img style="max-width:50px; height: 50px; object-fit: contain; display:block; padding: 5px;"
                                                     src="./uploads/<?php echo  $resultA['product_img_desc'] ?>" alt="">
                                     <?php
                                             }

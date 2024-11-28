@@ -18,16 +18,28 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $user_email = $_POST['email'];
         $user_password = $_POST['password'];
         $user_phone =  $_POST['phone'];
-        $insert_user = $user->insert_user($user_full_name, $user_email, $user_phone, $user_password, "user"); ?>
-        <script>
+        // Chuyển đổi thành kiểu boolean - Trả về  true khi có bản ghi
+        $check_email = $user->check_email_is_exist($user_email)->num_rows > 0;
+
+        if ($check_email) {
+            // Email đã tồn tại
+            echo "<script>
+            const failEmail = confirm('Email bạn đăng ký đã tồn tại');
+            if (failEmail) {
+                alert('Hãy tạo email mới');
+            }
+          </script>";
+        } else {
+            // Email chưa tồn tại, thêm mới
+            $insert_user = $user->insert_user($user_full_name, $user_email, $user_phone, $user_password, "user");
+
+            echo "<script>
             const userConfirmed = confirm('Chúc mừng bạn đã đăng ký thành công!!! Vui lòng đăng nhập để vào trang chủ =))');
             if (userConfirmed) {
                 window.location.href = 'http://localhost/clone-Ivy/login.php';
             }
-        </script>
-
-<?php
-        echo "";
+          </script>";
+        }
     }
 }
 ?>
@@ -42,6 +54,23 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     <link rel="stylesheet" href="./assets/css/login-signup.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <title>Đăng ký</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="./assets/favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="./assets/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
