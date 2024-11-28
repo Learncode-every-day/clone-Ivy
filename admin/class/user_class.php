@@ -61,6 +61,13 @@ class User
         return $result;
     }
 
+    public function get_info($user_email)
+    {
+        $query = "SELECT * FROM table_user WHERE user_email = '$user_email'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
     public function check_email_is_exist($user_email)
     {
         $query = "SELECT * FROM table_user WHERE user_email = '$user_email' LIMIT 1";
