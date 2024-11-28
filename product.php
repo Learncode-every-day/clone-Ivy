@@ -13,9 +13,11 @@ if (basename(__FILE__) === "product.php") {
     include "./admin/class/category_class.php";
     include "./admin/class/brand_class.php";
     include "./admin/class/product_class.php";
+    include "./admin/class/cart_class.php";
     $category = new Category();
     $brand = new Brand();
     $product = new Product();
+    $cart = new Cart();
     $get_product_id = $_GET['product_id'];
     $show_all_product = $product->show_product();
     if ($show_all_product) {
@@ -240,10 +242,67 @@ if (basename(__FILE__) === "product.php") {
                                 </ul>
                             </div>
                         </li>
-                        <li class="other__item">
-                            <a href="http://localhost/clone-Ivy/cart.php" class="other__link"><img
-                                    src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
-                            </a>
+                        <li class="other__item other__item-cart">
+                            <div class="dropdown">
+                                <div class="dropdown__select">
+                                    <a href="http://localhost/clone-Ivy/cart.php" class="other__link"><img
+                                            src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
+                                    </a>
+                                </div>
+                                <?php
+                                $cart = new Cart();
+                                $count_cart = $cart->count_product_in_cart();
+                                if ($count_cart) {
+                                    $result = $count_cart->fetch_assoc();
+                                    // var_dump($result);
+                                }
+
+                                ?>
+                                <span class="header-cart__notice"><?php echo $result['total']; ?></span>
+                                <ul class="dropdown__list dropdown__list-cart">
+                                    <?php
+                                    $cart = new Cart();
+                                    $show_cart = $cart->show_cart();
+                                    if ($show_cart) {
+                                        // var_dump($show_cart);
+                                        while ($result = $show_cart->fetch_assoc()) {
+                                            // var_dump($result);
+
+                                    ?>
+                                            <li class="dropdown__item">
+                                                <a style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id']; ?>">
+                                                    <img style="height: 50px; width: 30px; object-fit:contain; display:block;"
+                                                        src="./admin/uploads/<?php echo $result['product_img']; ?>" alt="">
+                                                    <div style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                                        class="cart-info">
+                                                        <h3
+                                                            style="font-size: 1.5rem; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; width: 130px;">
+                                                            <?php echo $result['cart_name'] ?></h3>
+                                                        <div
+                                                            style="display: flex; align-items:center; justify-content:space-between;  margin-top: 10px; width: 100%;">
+                                                            <span style="font-size: 1rem">Giá:
+                                                                <?php echo $result['cart_price'] . ".000 đ" ?></span>
+                                                            <span style="font-size: 1rem">Số lượng:
+                                                                <?php echo $result['cart_quantity'] ?></span>
+                                                        </div>
+                                                        <div class="" style="font-size: 0.8rem">
+                                                            <a
+                                                                href="handle-click.php?action=delete&product_id=<?php echo $result['product_id'] ?>"><span>Xóa</span></a>
+                                                            <a
+                                                                href="handle-click.php?action=detail&product_id=<?php echo $result['product_id'] ?>"><span>Xem
+                                                                    chi tiết</span></a>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -322,9 +381,6 @@ if (basename(__FILE__) === "product.php") {
                             }
                         }
                         ?>
-                        <!-- <img src="./assets/img/category-img/pic1_2.jpg" alt="" />
-                        <img src="./assets/img/category-img/pic1_3.jpg" alt="" />
-                        <img src="./assets/img/category-img/pic1_4.jpg" alt="" /> -->
                     </div>
                 </div>
                 <div class="product-content-right">

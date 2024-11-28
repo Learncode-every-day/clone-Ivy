@@ -11,9 +11,11 @@ if (basename(__FILE__) === "category.php") {
     include "./admin/class/category_class.php";
     include "./admin/class/brand_class.php";
     include "./admin/class/product_class.php";
+    include "./admin/class/cart_class.php";
     $category = new Category();
     $brand = new Brand();
     $product = new Product();
+    $cart = new Cart();
     $get_product_id = $_GET['product_id'] ?? "";
     $get_brand_id = $_GET['brand_id'] ?? "";
     $get_category_id = $_GET['category_id'] ?? "";
@@ -231,10 +233,67 @@ if (basename(__FILE__) === "category.php") {
                                 </ul>
                             </div>
                         </li>
-                        <li class="other__item">
-                            <a href="http://localhost/clone-Ivy/cart.php" class="other__link"><img
-                                    src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
-                            </a>
+                        <li class="other__item other__item-cart">
+                            <div class="dropdown">
+                                <div class="dropdown__select">
+                                    <a href="http://localhost/clone-Ivy/cart.php" class="other__link"><img
+                                            src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
+                                    </a>
+                                </div>
+                                <?php
+                                $cart = new Cart();
+                                $count_cart = $cart->count_product_in_cart();
+                                if ($count_cart) {
+                                    $result = $count_cart->fetch_assoc();
+                                    // var_dump($result);
+                                }
+
+                                ?>
+                                <span class="header-cart__notice"><?php echo $result['total']; ?></span>
+                                <ul class="dropdown__list dropdown__list-cart">
+                                    <?php
+                                    $cart = new Cart();
+                                    $show_cart = $cart->show_cart();
+                                    if ($show_cart) {
+                                        // var_dump($show_cart);
+                                        while ($result = $show_cart->fetch_assoc()) {
+                                            // var_dump($result);
+
+                                    ?>
+                                            <li class="dropdown__item">
+                                                <a style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id']; ?>">
+                                                    <img style="height: 50px; width: 30px; object-fit:contain; display:block;"
+                                                        src="./admin/uploads/<?php echo $result['product_img']; ?>" alt="">
+                                                    <div style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                                        class="cart-info">
+                                                        <h3
+                                                            style="font-size: 1.5rem; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; width: 130px;">
+                                                            <?php echo $result['cart_name'] ?></h3>
+                                                        <div
+                                                            style="display: flex; align-items:center; justify-content:space-between;  margin-top: 10px; width: 100%;">
+                                                            <span style="font-size: 1rem">Giá:
+                                                                <?php echo $result['cart_price'] . ".000 đ" ?></span>
+                                                            <span style="font-size: 1rem">Số lượng:
+                                                                <?php echo $result['cart_quantity'] ?></span>
+                                                        </div>
+                                                        <div class="" style="font-size: 0.8rem">
+                                                            <a
+                                                                href="handle-click.php?action=delete&product_id=<?php echo $result['product_id'] ?>"><span>Xóa</span></a>
+                                                            <a
+                                                                href="handle-click.php?action=detail&product_id=<?php echo $result['product_id'] ?>"><span>Xem
+                                                                    chi tiết</span></a>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -320,46 +379,6 @@ if (basename(__FILE__) === "category.php") {
                     <?php
                         }
                     } ?>
-                    <!-- <li class="category-left__item">
-                        <a href="#!" class="category-left__link">Nam</a>
-                        <ul>
-                            <li>
-                                <a href="#!">Hàng nam mới về</a>
-                            </li>
-                            <li>
-                                <a href="#!">Beyond trendy</a>
-                            </li>
-                            <li>
-                                <a href="#!">Jeans for joy</a>
-                            </li>
-                            <li>
-                                <a href="#!">Quần jeans nam</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="category-left__item">
-                        <a href="#!" class="category-left__link">Trẻ em</a>
-                        <ul>
-                            <li>
-                                <a href="#!">Quần áo cho trẻ em</a>
-                            </li>
-                            <li>
-                                <a href="#!"></a>
-                            </li>
-                            <li>
-                                <a href="#!"></a>
-                            </li>
-                            <li>
-                                <a href="#!"></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="category-left__item">
-                        <a href="#!" class="category-left__link">Bộ sưu tập</a>
-                    </li>
-                    <li class="category-left__item">
-                        <a href="#!" class="category-left__link">Đồ bảo hộ</a>
-                    </li> -->
                 </ul>
             </div>
             <div class="category-right">
@@ -401,11 +420,11 @@ if (basename(__FILE__) === "category.php") {
                                             </div>
                                             <div class="actions-button">
                                                 <a
-                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><button
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>&action=detail"><button
                                                         class="detail-btn">Chi tiết</button></a>
                                                 <a
-                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><button
-                                                        class="add-to-buy-btn">Thêm giỏ hàng</button></a>
+                                                    href="http://localhost/clone-Ivy/handle-click.php?product_id=<?php echo $result['product_id'] ?>&product_name=<?php echo $result['product_name'] ?>&product_price=<?php echo $result['product_price'] ?>&action=add"><button
+                                                        class="add-to-buy-btn" id="add-to-buy-btn">Thêm giỏ hàng</button></a>
                                             </div>
                                         </a>
                                     </div>
@@ -415,6 +434,16 @@ if (basename(__FILE__) === "category.php") {
                         }
                     }
                     ?>
+                    <!-- <script>
+                        const clickToAdd = document.getElementById('add-to-buy-btn');
+                        clickToAdd.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            <?php
+                            // $cart = new Cart();
+                            // $insert_cart = $cart->insert_cart($result['product_name'], 1, $result['product_price'], $result['product_id']);
+                            ?>
+                        });
+                    </script> -->
                     <!-- <div class="category-right-content__item">
                         <img src="./assets/img/category-img/pic2_1.jpg" alt="" />
                         <h1>Áo khoác Tweed cổ V Flare</h1>

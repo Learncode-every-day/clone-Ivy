@@ -14,10 +14,12 @@ if (basename(__FILE__) === "index.php") {
     include "./admin/class/brand_class.php";
     include "./admin/class/product_class.php";
     include "./admin/class/user_class.php";
+    include "./admin/class/cart_class.php";
     $category = new Category();
     $brand = new Brand();
     $product = new Product();
     $user = new User();
+    $cart = new Cart();
 }
 
 
@@ -72,45 +74,45 @@ if (!isset($_SESSION['myAccount'])) {
                         if ($show_category) {
                             while ($result = $show_category->fetch_assoc()) {
                         ?>
-                                <li class="menu__item">
-                                    <a href="http://localhost/clone-Ivy/category.php?category_id=<?php echo $result['category_id'] ?>"
-                                        class="menu__link"><?php echo $result['category_name']; ?></a>
-                                    <ul class="sub-menu">
-                                        <?php
+                        <li class="menu__item">
+                            <a href="http://localhost/clone-Ivy/category.php?category_id=<?php echo $result['category_id'] ?>"
+                                class="menu__link"><?php echo $result['category_name']; ?></a>
+                            <ul class="sub-menu">
+                                <?php
                                         $show_brand = $brand->show_brand();
                                         if ($show_brand) {
                                             while ($resultA = $show_brand->fetch_assoc()) {
                                         ?>
-                                                <?php if ($result['category_id'] === $resultA['category_id']) { ?>
-                                                    <li class="sub-menu__item">
-                                                        <a href="http://localhost/clone-Ivy/category.php?brand_id=<?php echo $resultA['brand_id'] ?>&category_id=<?php echo $resultA['category_id'] ?>"
-                                                            class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
-                                                        <ul class="sub-menu-clone">
-                                                            <?php $show_product = $product->show_product();
+                                <?php if ($result['category_id'] === $resultA['category_id']) { ?>
+                                <li class="sub-menu__item">
+                                    <a href="http://localhost/clone-Ivy/category.php?brand_id=<?php echo $resultA['brand_id'] ?>&category_id=<?php echo $resultA['category_id'] ?>"
+                                        class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
+                                    <ul class="sub-menu-clone">
+                                        <?php $show_product = $product->show_product();
                                                             if ($show_product) {
                                                                 while ($resultB = $show_product->fetch_assoc()) {
                                                                     if ($resultA['brand_id'] === $resultB['brand_id']) {
                                                             ?>
-                                                                        <li class="sub-menu-clone__item">
-                                                                            <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $resultB['product_id'] ?>&brand_id=<?php echo $resultB['brand_id'] ?>&category_id=<?php echo $resultB['category_id'] ?>"
-                                                                                class="sub-menu-clone__link">
-                                                                                <?php echo $resultB['product_name']; ?>
-                                                                            </a>
-                                                                        </li>
-                                                            <?php
+                                        <li class="sub-menu-clone__item">
+                                            <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $resultB['product_id'] ?>&brand_id=<?php echo $resultB['brand_id'] ?>&category_id=<?php echo $resultB['category_id'] ?>"
+                                                class="sub-menu-clone__link">
+                                                <?php echo $resultB['product_name']; ?>
+                                            </a>
+                                        </li>
+                                        <?php
                                                                     }
                                                                 }
                                                             }
                                                             ?>
-                                                        </ul>
-                                                    </li>
-                                                <?php } ?>
-                                        <?php
+                                    </ul>
+                                </li>
+                                <?php } ?>
+                                <?php
                                             }
                                         }
                                         ?>
-                                    </ul>
-                                </li>
+                            </ul>
+                        </li>
                         <?php
                             }
                         }
@@ -165,32 +167,32 @@ if (!isset($_SESSION['myAccount'])) {
                                         if ($show_product_by_content) {
                                             while ($result = $show_product_by_content->fetch_assoc()) {
                                         ?>
-                                                <tr class="item-search__item">
+                                        <tr class="item-search__item">
 
-                                                    <td class="item-search__name"><a
-                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><?php echo $result['product_name'] ?></a>
-                                                    </td>
-                                                    <td style="display: flex; align-items:center; justify-content: center;">
-                                                        <a
-                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
-                                                            <img style="width: 50px; object-fit:contain; "
-                                                                src="./admin/uploads/<?php echo $result['product_img'] ?>"
-                                                                alt="">
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a
-                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
-                                                            <?php echo $result['product_price'] ?>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a
-                                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
-                                                            <?php echo $result['product_price_sale'] ?>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            <td class="item-search__name"><a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><?php echo $result['product_name'] ?></a>
+                                            </td>
+                                            <td style="display: flex; align-items:center; justify-content: center;">
+                                                <a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                    <img style="width: 50px; object-fit:contain; "
+                                                        src="./admin/uploads/<?php echo $result['product_img'] ?>"
+                                                        alt="">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                    <?php echo $result['product_price'] ?>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                    <?php echo $result['product_price_sale'] ?>
+                                                </a>
+                                            </td>
+                                        </tr>
                                         <?php
                                             }
                                         }
@@ -247,11 +249,58 @@ if (!isset($_SESSION['myAccount'])) {
                                             src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
                                     </a>
                                 </div>
-                                <span class="header-cart__notice">0</span>
+                                <?php
+                                $cart = new Cart();
+                                $count_cart = $cart->count_product_in_cart();
+                                if ($count_cart) {
+                                    $result = $count_cart->fetch_assoc();
+                                    // var_dump($result);
+                                }
+
+                                ?>
+                                <span class="header-cart__notice"><?php echo $result['total']; ?></span>
                                 <ul class="dropdown__list dropdown__list-cart">
-                                    <li class="dropdown__item">hello</li>
-                                    <li class="dropdown__item">hello</li>
-                                    <li class="dropdown__item">hello</li>
+                                    <?php
+                                    $cart = new Cart();
+                                    $show_cart = $cart->show_cart();
+                                    if ($show_cart) {
+                                        // var_dump($show_cart);
+                                        while ($result = $show_cart->fetch_assoc()) {
+                                            // var_dump($result);
+
+                                    ?>
+                                    <li class="dropdown__item">
+                                        <a style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id']; ?>">
+                                            <img style="height: 50px; width: 30px; object-fit:contain; display:block;"
+                                                src="./admin/uploads/<?php echo $result['product_img']; ?>" alt="">
+                                            <div style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                                class="cart-info">
+                                                <h3
+                                                    style="font-size: 1.5rem; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; width: 130px;">
+                                                    <?php echo $result['cart_name'] ?></h3>
+                                                <div
+                                                    style="display: flex; align-items:center; justify-content:space-between;  margin-top: 10px; width: 100%;">
+                                                    <span style="font-size: 1rem">Giá:
+                                                        <?php echo $result['cart_price'] . ".000 đ" ?></span>
+                                                    <span style="font-size: 1rem">Số lượng:
+                                                        <?php echo $result['cart_quantity'] ?></span>
+                                                </div>
+                                                <div class="" style="font-size: 0.8rem">
+                                                    <a
+                                                        href="handle-click.php?action=delete&product_id=<?php echo $result['product_id'] ?>"><span>Xóa</span></a>
+                                                    <a
+                                                        href="handle-click.php?action=detail&product_id=<?php echo $result['product_id'] ?>"><span>Xem
+                                                            chi tiết</span></a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </li>
@@ -272,7 +321,7 @@ if (!isset($_SESSION['myAccount'])) {
                     <img src="./assets/img/slider-3.webp" alt="" />
                     <img src="./assets/img/slider-4.webp" alt="" />
                 </div>
-                <!-- Thẻ dot dưới để di chuyển trong slider -->
+                <!-- Thẻ dot dưới để di chuyển trong slider --uc
                 <div class="dot-container">
                     <div class="dot active"></div>
                     <div class="dot"></div>
@@ -284,117 +333,117 @@ if (!isset($_SESSION['myAccount'])) {
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <!-- App -->
-        <section class="app-container">
-            <p class="app-container__desc">Tải ứng dụng IVY moda</p>
-            <div class="app-google">
-                <a href="#!"><img src="./assets/img/googleplay.png" alt="" /></a>
-                <a href="#!"><img src="./assets/img/appstore.png" alt="" /></a>
-            </div>
-            <p class="app-container__desc">Nhận bản tin IVY moda</p>
-            <input type="text" placeholder="Nhập email của bạn..." />
-        </section>
+                <footer class="footer">
+                    <!-- App -->
+                    <section class="app-container">
+                        <p class="app-container__desc">Tải ứng dụng IVY moda</p>
+                        <div class="app-google">
+                            <a href="#!"><img src="./assets/img/googleplay.png" alt="" /></a>
+                            <a href="#!"><img src="./assets/img/appstore.png" alt="" /></a>
+                        </div>
+                        <p class="app-container__desc">Nhận bản tin IVY moda</p>
+                        <input type="text" placeholder="Nhập email của bạn..." />
+                    </section>
 
-        <div class="footer-top">
-            <ul class="footer-top__list">
-                <li class="footer-top__item">
-                    <a href="#!"><img src="./assets/img/img-congthuong.png" alt="" /></a>
-                </li>
-                <li class="footer-top__item">
-                    <a href="#!">Liên hệ</a>
-                </li>
-                <li class="footer-top__item">
-                    <a href="#!">Tuyển dụng</a>
-                </li>
-                <li class="footer-top__item">
-                    <a href="#!">Giới thiệu</a>
-                </li>
-                <li class="footer-top__item">
-                    <a href="#!">
-                        <img src="./assets/icons/facebook.svg" alt="Facebook" class="footer__icon" />
-                    </a>
-                </li>
-                <li class="footer-top__item">
-                    <a href="#!">
-                        <img src="./assets/icons/twitter.svg" alt="Twitter" class="footer__icon" />
-                    </a>
-                </li>
-                <li class="footer-top__item">
-                    <a href="#!">
-                        <img src="./assets/icons/youtube.svg" alt="Youtube" class="footer__icon" />
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="footer-center">
-            <p class="footer-address">
-                Công ty Cổ phần Dự Kim với số đăng ký kinh doanh:
-                <a href="tel: 0105777650">0105777650</a>
-                <br />
-                Địa chỉ đăng ký: Tổ dân phố Tháp, P.Đại Mỗ, Q.Nam Từ Liêm,
-                TP Hà Nội, Việt Nam -
-                <a href="tel: 02432052222">0243 205 2222</a> <br />
-                Đặt hàng online:
-                <a href="tel: 02466623434">0246 662 3434</a>
-            </p>
-        </div>
-        <div class="footer-bottom">@Ivymoda All rights reserved</div>
-    </footer>
+                    <div class="footer-top">
+                        <ul class="footer-top__list">
+                            <li class="footer-top__item">
+                                <a href="#!"><img src="./assets/img/img-congthuong.png" alt="" /></a>
+                            </li>
+                            <li class="footer-top__item">
+                                <a href="#!">Liên hệ</a>
+                            </li>
+                            <li class="footer-top__item">
+                                <a href="#!">Tuyển dụng</a>
+                            </li>
+                            <li class="footer-top__item">
+                                <a href="#!">Giới thiệu</a>
+                            </li>
+                            <li class="footer-top__item">
+                                <a href="#!">
+                                    <img src="./assets/icons/facebook.svg" alt="Facebook" class="footer__icon" />
+                                </a>
+                            </li>
+                            <li class="footer-top__item">
+                                <a href="#!">
+                                    <img src="./assets/icons/twitter.svg" alt="Twitter" class="footer__icon" />
+                                </a>
+                            </li>
+                            <li class="footer-top__item">
+                                <a href="#!">
+                                    <img src="./assets/icons/youtube.svg" alt="Youtube" class="footer__icon" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-center">
+                        <p class="footer-address">
+                            Công ty Cổ phần Dự Kim với số đăng ký kinh doanh:
+                            <a href="tel: 0105777650">0105777650</a>
+                            <br />
+                            Địa chỉ đăng ký: Tổ dân phố Tháp, P.Đại Mỗ, Q.Nam Từ Liêm,
+                            TP Hà Nội, Việt Nam -
+                            <a href="tel: 02432052222">0243 205 2222</a> <br />
+                            Đặt hàng online:
+                            <a href="tel: 02466623434">0246 662 3434</a>
+                        </p>
+                    </div>
+                    <div class="footer-bottom">@Ivymoda All rights reserved</div>
+                </footer>
 </body>
 <script src="./assets/js/slider.js"></script>
 <script>
-    const header = document.querySelector("header");
-    window.addEventListener("scroll", function() {
-        // Bắt được tọa độ khi di chuyển lên xuống theo chiều dọc - y
-        x = window.pageYOffset;
-        if (x > 0) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
-    });
+const header = document.querySelector("header");
+window.addEventListener("scroll", function() {
+    // Bắt được tọa độ khi di chuyển lên xuống theo chiều dọc - y
+    x = window.pageYOffset;
+    if (x > 0) {
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
+    }
+});
 
-    // Xử lý phần hiển thị bảng tìm kiếm
-    const inputSearch = document.getElementById("search-input");
-    const tableSearch = document.getElementById("search-table");
+// Xử lý phần hiển thị bảng tìm kiếm
+const inputSearch = document.getElementById("search-input");
+const tableSearch = document.getElementById("search-table");
 
-    inputSearch.addEventListener("input", function() {
-        // console.log("Đã bắt đầu sự kiện");
-        const query = this.value.trim(); // Lấy giá trị người dùng nhập
-        if (query === "") {
-            tableSearch.style.display = "none";
-            return;
-        }
+inputSearch.addEventListener("input", function() {
+    // console.log("Đã bắt đầu sự kiện");
+    const query = this.value.trim(); // Lấy giá trị người dùng nhập
+    if (query === "") {
+        tableSearch.style.display = "none";
+        return;
+    }
 
-        // Gửi yêu cầu AJAX
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "search_handler.php", true); // `search_handler.php` là file xử lý kết quả tìm kiếm
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    // Gửi yêu cầu AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "search_handler.php", true); // `search_handler.php` là file xử lý kết quả tìm kiếm
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log("a");
-                console.log(xhr.responseText); // Kiểm tra dữ liệu trả về
-                if (xhr.responseText.trim() !== "") {
-                    tableSearch.innerHTML = xhr.responseText;
-                    tableSearch.style.display = "block";
-                    document.addEventListener("click", function(event) {
-                        // Kiểm tra xem click có phải là ngoài input hoặc bảng tìm kiếm không
-                        if (!tableSearch.contains(event.target) && event.target !== inputSearch) {
-                            tableSearch.style.display = "none"; // Ẩn bảng khi click ra ngoài
-                        }
-                    });
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log("a");
+            console.log(xhr.responseText); // Kiểm tra dữ liệu trả về
+            if (xhr.responseText.trim() !== "") {
+                tableSearch.innerHTML = xhr.responseText;
+                tableSearch.style.display = "block";
+                document.addEventListener("click", function(event) {
+                    // Kiểm tra xem click có phải là ngoài input hoặc bảng tìm kiếm không
+                    if (!tableSearch.contains(event.target) && event.target !== inputSearch) {
+                        tableSearch.style.display = "none"; // Ẩn bảng khi click ra ngoài
+                    }
+                });
 
-                } else {
-                    tableSearch.style.display = "none"; // Ẩn bảng nếu không có kết quả
-                }
+            } else {
+                tableSearch.style.display = "none"; // Ẩn bảng nếu không có kết quả
             }
-        };
+        }
+    };
 
 
-        xhr.send(`query=${encodeURIComponent(query)}`);
-    });
+    xhr.send(`query=${encodeURIComponent(query)}`);
+});
 </script>
 
 </html>
