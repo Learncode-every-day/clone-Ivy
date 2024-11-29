@@ -5,6 +5,7 @@ session_start();
 if (isset($_SESSION['myAccount'])) {
     unset($_SESSION['myAccount']);
     unset($_SESSION['first-visit']);
+    unset($_SESSION['user_role']);
 }
 $cart = new Cart();
 $delete_all_cart_item = $cart->delete_all_cart();
