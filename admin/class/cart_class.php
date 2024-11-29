@@ -21,7 +21,7 @@ class Cart
 
     public function show_cart()
     {
-        $query = "SELECT table_cart.*, table_product.product_img, table_product.product_name, table_product.product_price FROM table_cart INNER JOIN table_product ON table_cart.product_id = table_product.product_id ORDER BY cart_id";
+        $query = "SELECT table_cart.*, table_product.product_img, table_product.product_name, table_product.product_price, table_product.product_id, table_product.brand_id, table_product.category_id FROM table_cart INNER JOIN table_product ON table_cart.product_id = table_product.product_id ORDER BY cart_id";
         $result = $this->db->select($query);
         return $result;
     }
@@ -60,6 +60,23 @@ class Cart
         $result = $this->db->select($query);
         $row = $result->fetch_assoc();
         return $row['total'];
+    }
+
+    public function merge_cart($product_id)
+    {
+        $query = "SELECT * FROM table_cart WHERE product_id = $product_id";
+        $result = $this->db->select($query);
+        if ($result->num_rows > 1) {
+            $resultA = $result->fetch_assoc();
+            $cart_id = $resultA['cart_id'];
+            // var_dump($cart_id);
+            $quantity = $resultA['cart_quantity'] + 1;
+            $query = "UPDATE table_cart SET cart_quantity = '$quantity' WHERE product_id = $product_id";
+            $result = $this->db->select($query);
+            $query = "DELETE FROM table_cart WHERE cart_id = $cart_id";
+            $result = $this->db->delete($query);
+        }
+        return $result;
     }
 }
 ?>

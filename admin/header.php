@@ -18,6 +18,10 @@ if ($_SESSION['user_role'] == 'admin') {
     </script>';
     $_SESSION['first-visit'] = true;
 }
+
+if (!isset($_SESSION['user_role'])) {
+    header("Location: http://localhost/clone-Ivy/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

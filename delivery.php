@@ -148,6 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <tr>
                                 <th>Tên sản phẩm</th>
                                 <th>Số lượng</th>
+                                <th>Giá</th>
                                 <th>Thành tiền</th>
                             </tr>
                         </thead>
@@ -157,13 +158,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $show_cart = $cart->show_cart();
                             if ($show_cart) {
                                 while ($result = $show_cart->fetch_assoc()) {
+                                    $sum = 0;
                                     $get_string_price = (int)(str_replace(['.', 'đ'], "", $result['product_price']));
-                                    $sum_price += $get_string_price;
+                                    $sum += $get_string_price * $result['cart_quantity'];
+                                    $sum_price += $sum;
                             ?>
                                     <tr>
                                         <td><?php echo $result['cart_name'] ?></td>
                                         <td><?php echo $result['cart_quantity'] ?></td>
-                                        <td><?php echo $result['product_price'] ?><sup>đ</sup></td>
+                                        <td><?php $number = str_replace('đ', '',  $result['cart_price']);
+
+                                            // Sử dụng hàm number_format để thêm dấu chấm
+                                            $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                            echo $formattedPrice; ?></td>
+                                        <td><?php
+                                            $number = str_replace('đ', '',  $sum);
+
+                                            // Sử dụng hàm number_format để thêm dấu chấm
+                                            $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                            echo $formattedPrice; ?></td>
                                     </tr>
                             <?php
                                 }
@@ -175,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <td>1.700.000 <sup>đ</sup></td>
                             </tr> -->
                             <tr>
-                                <td style="font-weight: bold" colspan="2">
+                                <td style="font-weight: bold" colspan="3">
                                     Tổng
                                 </td>
                                 <td><?php $number = str_replace('đ', '', $sum_price);
@@ -185,24 +198,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     echo $formattedPrice; ?><sup>đ</sup></td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold" colspan="2">
+                                <td style="font-weight: bold" colspan="3">
                                     Thuế VAT
                                 </td>
                                 <td><?php
-                                    $number = str_replace('đ', '', $sum_price * 0.95);
+                                    $number = str_replace('đ', '', $sum_price * 1.05);
 
                                     // Sử dụng hàm number_format để thêm dấu chấm
                                     $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
                                     echo $formattedPrice; ?><sup>đ</sup></td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold" colspan="2">
+                                <td style="font-weight: bold" colspan="3    ">
                                     Tổng tiền hàng
                                 </td>
-                                <td><?php $number = str_replace('đ', '', $sum_price * 0.95);
+                                <td><?php $number = str_replace('đ', '', $sum_price * 1.05);
 
                                     // Sử dụng hàm number_format để thêm dấu chấm
                                     $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                    $_SESSION['total_money'] = $formattedPrice;
                                     echo $formattedPrice; ?><sup>đ</sup></td>
                             </tr>
                         </tbody>

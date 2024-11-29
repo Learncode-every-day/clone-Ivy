@@ -62,6 +62,7 @@ $cart = new Cart();
                             <tr>
                                 <th>Sản phẩm</th>
                                 <th>Tên sản phẩm</th>
+                                <th>Giá</th>
                                 <th>Số lượng</th>
                                 <th>Thành tiền</th>
                                 <th>Xóa</th>
@@ -74,23 +75,40 @@ $cart = new Cart();
                             $show_cart = $cart->show_cart();
                             if ($show_cart) {
                                 while ($result = $show_cart->fetch_assoc()) {
-                                    $count++;
+                                    $sum = 0;
+                                    $count += $result['cart_quantity'];
                                     $get_string_price = (int)(str_replace(['.', 'đ'], "", $result['product_price']));
-                                    $sum_price += $get_string_price;
+                                    $sum += $get_string_price * $result['cart_quantity'];
+                                    $sum_price += $sum;
                             ?>
                                     <tr>
                                         <td>
                                             <img src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="" />
                                         </td>
                                         <td>
-                                            <p>Quần Sock</p>
-                                        </td>
-                                        <td>
-                                            <input type="number" value="1" min="1" />
+                                            <p><?php echo $result['cart_name'] ?></p>
                                         </td>
                                         <td>
                                             <p><?php
-                                                echo strtok($get_string_price, "đ"); ?><sup>đ</sup></p>
+                                                $number = str_replace('đ', '',  $result['cart_price']);
+
+                                                // Sử dụng hàm number_format để thêm dấu chấm
+                                                $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                                echo $formattedPrice; ?><sup>đ</sup>
+                                            </p>
+
+                                        </td>
+                                        <td>
+                                            <span><?php echo $result['cart_quantity'] ?></span>
+                                        </td>
+                                        <td>
+                                            <p><?php
+                                                // Loại bỏ ký tự 'đ' trước khi định dạng
+                                                $number = str_replace('đ', '', $sum);
+
+                                                // Sử dụng hàm number_format để thêm dấu chấm
+                                                $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                                echo $formattedPrice; ?><sup>đ</sup></p>
                                         </td>
                                         <td>
                                             <a
@@ -121,7 +139,6 @@ $cart = new Cart();
                                 <td>Tổng tiền hàng</td>
                                 <td>
                                     <p><?php
-
                                         // Loại bỏ ký tự 'đ' trước khi định dạng
                                         $number = str_replace('đ', '', $sum_price);
 
@@ -168,7 +185,24 @@ $cart = new Cart();
                         </p>
                     </div> -->
                     <div class="cart-content-right-button">
-                        <a href="category.php"><button>Tiếp tục mua sắm</button></a>
+                        <?php
+                        $product = new Product();
+                        $show_product = $product->show_product();
+                        if ($show_product) { {
+                                $i = 0;
+                                while ($result = $show_product->fetch_assoc()) {
+                                    $i++;
+                                    if ($i == 1) {
+                                        $brand_id = $result['brand_id'];
+                                        $category_id = $result['category_id'];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                        <a href="category.php?brand_id=<?php echo $brand_id; ?>&category_id=<?php echo $category_id ?>"><button>Tiếp
+                                tục mua sắm</button></a>
                         <a href="delivery.php"><button>Thanh toán</button></a>
                     </div>
                     <!-- <div class="cart-content-right-log-in">

@@ -428,6 +428,13 @@ WHERE p.product_id = '$category_id';
         return $result;
     }
 
+    public function get_product_relative($brand_id)
+    {
+        $query = "SELECT * FROM table_product WHERE brand_id = '$brand_id' ORDER BY RAND() LIMIT 5";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
     /*======================================= */
     //!  Category: Danh mục
     public function insert_category($category_name)

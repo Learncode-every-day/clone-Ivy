@@ -1,15 +1,15 @@
 <?php
+// Tắt hiển thị lỗi
+// ini_set('display_errors', 0);
+// error_reporting(0);  // Tắt tất cả các loại lỗi
+
+// // Hoặc chỉ tắt các loại lỗi cảnh báo (warnings)
+// ini_set('display_errors', 0);
+// error_reporting(E_ERROR | E_PARSE);  // Chỉ hiển thị lỗi nghiêm trọng
 include "./admin/database.php";
 include "./admin/class/cart_class.php";
 include "./admin/class/product_class.php";
 
-// Tắt hiển thị lỗi
-ini_set('display_errors', 0);
-error_reporting(0);  // Tắt tất cả các loại lỗi
-
-// Hoặc chỉ tắt các loại lỗi cảnh báo (warnings)
-ini_set('display_errors', 0);
-error_reporting(E_ERROR | E_PARSE);  // Chỉ hiển thị lỗi nghiêm trọng
 
 if ($_GET['action'] == 'add') {
     $cart = new Cart();
@@ -18,18 +18,25 @@ if ($_GET['action'] == 'add') {
     $get_product = $product->get_product($product_id);
     $resultA = $get_product->fetch_assoc();
     $product_name = $resultA['product_name'];
-    $product_price = (int)(str_replace(['.', 'đ'], "", $result['product_price']));
+    $product_price = (int)(str_replace(['.', 'đ'], "", $resultA['product_price']));
     // var_dump($product_price);
     $insert_cart = $cart->insert_cart($product_name, 1, $product_price, $product_id);
-    header("location: category.php?category_id=" . 12);
+    $merge_cart = $cart->merge_cart($product_id);
+    header("location: category.php?category_id=" . $resultA['category_id'] . "&brand_id=" . $resultA['brand_id']);
 } else if ($_GET['action'] == 'delete') {
     $product_id = $_GET['product_id'];
     $cart = new Cart();
+    $product = new Product();
+    $get_product = $product->get_product($product_id);
+    $resultA = $get_product->fetch_assoc();
     $delete_cart = $cart->delete_cart_item($product_id);
-    header("location: category.php?category_id=" . 12);
+    header("location: category.php?category_id=" . $resultA['category_id'] . "&brand_id=" . $resultA['brand_id']);
 } else if ($_GET['action'] == 'detail') {
     $product_id = $_GET['product_id'];
-    header("location: product.php?product_id=" . $product_id);
+    $product = new Product();
+    $get_product = $product->get_product($product_id);
+    $resultA = $get_product->fetch_assoc();
+    header("location: product.php?product_id=" . $product_id . "&brand_id=" . $resultA['brand_id'] . "&category_id=" . $resultA['category_id']);
 } else if ($_GET['action'] == 'delete_one') {
     $cart = new Cart();
     $product = new Product();
@@ -51,5 +58,5 @@ if ($_GET['action'] == 'add') {
             $category_id = $result['category_id'];
         }
     }
-    header("location: cart.php&brand_id=" . $brand_id . "&category_id=" . $category_id);
+    header("location: cart.php");
 }

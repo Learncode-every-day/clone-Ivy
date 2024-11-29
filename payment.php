@@ -20,7 +20,11 @@ $brand = new Brand();
 $product = new Product();
 $user = new User();
 $cart = new Cart();
-
+if (isset($_SESSION['total_money'])) {
+    $total_money = $_SESSION['total_money'];
+} else {
+    $total_money = 0;
+}
 ?>
 
 <script>
@@ -86,10 +90,11 @@ $cart = new Cart();
                         <div class="payment-content-left-method-payment-item-img row">
                             <img style="height: 200px; margin-right: 10px" src="./assets/img/qr-code.png" alt="" />
                         </div>
-                        <!-- <div class="payment-content-left-method-payment-item">
-                            <input type="radio" name="method-payment" id="" />
-                            <label for="">Thanh toán thẻ ATM(OnePay)</label>
+                        <div style="margin-top: 20px; font-size: 3rem" class="payment-content-left-method-payment-item">
+                            <label for="">Giá tiền cho tổng hàng: </label>
+                            <input type="text" name="" id="" value="<?php echo $total_money; ?>" />
                         </div>
+                        <!--
                         <div class="payment-content-left-method-payment-item-img row">
                             <img style="width: 450px; object-fit: cover" src="./assets/img/picForPayment.png" alt="" />
                         </div>
@@ -132,11 +137,17 @@ $cart = new Cart();
                 </div>
             </div>
             <div class="payment-content-right-payment">
-                <button id="payment-completed">Tiếp tục thanh toán</button>
+                <button id="payment-completed">Kiểm tra thanh toán</button>
                 <script>
                     const submitBtn = document.getElementById('payment-completed');
-                    submitBtn.addEventListener('click', () => {
+                    submitBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
                         alert("Chúc mừng bạn đã thanh toán thành công!!");
+                        <?php
+                        $cart = new Cart();
+                        $delete_all_cart = $cart->delete_all_cart();
+                        unset($_SESSION['total_money'])
+                        ?>
                         window.location.href = "index.php";
                     });
                 </script>

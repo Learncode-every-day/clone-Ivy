@@ -263,7 +263,26 @@ if (basename(__FILE__) === "product.php") {
                 <p>Sản phẩm liên quan</p>
             </div>
             <div class="product-content row">
-                <div class="product-related-item">
+                <?php
+                $product = new Product();
+                $get_product_relative = $product->get_product_relative($_GET['brand_id']);
+                if ($get_product_relative) {
+                    while ($result = $get_product_relative->fetch_assoc()) {
+                ?>
+                        <div class="product-related-item">
+                            <a
+                                href="product.php?product_id=<?php echo $result['product_id'] ?>&brand_id=<?php echo $result['brand_id'] ?>&category_id=<?php echo $get_category_id; ?>">
+                                <img src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="" />
+                                <h1><?php echo $result['product_name'] ?></h1>
+                                <p><?php $get_string_price = $result['product_price'];
+                                    echo strtok($get_string_price, "đ"); ?><sup>đ</sup></p>
+                            </a>
+                        </div>
+                <?php
+                    }
+                }
+                ?>
+                <!-- <div class="product-related-item">
                     <img src="./assets/img/category-img/pic1_2.jpg" alt="" />
                     <h1>Áo thun cổ tròn</h1>
                     <p>1.200.000 <sup>đ</sup></p>
@@ -281,14 +300,9 @@ if (basename(__FILE__) === "product.php") {
                 <div class="product-related-item">
                     <img src="./assets/img/category-img/pic1_2.jpg" alt="" />
                     <h1>Áo thun cổ tròn</h1>
-                    <p>1.200.000 <sup>đ</sup></p>
-                </div>
-                <div class="product-related-item">
-                    <img src="./assets/img/category-img/pic1_2.jpg" alt="" />
-                    <h1>Áo thun cổ tròn</h1>
-                    <p>1.200.000 <sup>đ</sup></p>
-                </div>
+                    <p>1.200.000 <sup>đ</sup></p> -->
             </div>
+        </div>
         </div>
     </section>
 

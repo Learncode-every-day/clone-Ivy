@@ -206,7 +206,7 @@
                                 ?>
                                         <li class="dropdown__item">
                                             <a style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
-                                                href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id']; ?>">
+                                                href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id']; ?>&brand_id=<?php echo $result['brand_id'] ?>&category_id=<?php echo $result['category_id'] ?>">
                                                 <img style="height: 50px; width: 30px; object-fit:contain; display:block;"
                                                     src="./admin/uploads/<?php echo $result['product_img']; ?>" alt="">
                                                 <div style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
@@ -216,12 +216,16 @@
                                                         <?php echo $result['cart_name'] ?></h3>
                                                     <div
                                                         style="display: flex; align-items:center; justify-content:space-between;  margin-top: 10px; width: 100%;">
-                                                        <span style="font-size: 1rem">Giá:
-                                                            <?php echo $result['cart_price'] . ".000 đ" ?></span>
-                                                        <span style="font-size: 1rem">Số lượng:
+                                                        <span style="font-size: 0.8rem">Giá:
+                                                            <?php
+                                                            $number = str_replace('đ', '', $result['cart_price']);
+                                                            // Sử dụng hàm number_format để thêm dấu chấm
+                                                            $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                                            echo $formattedPrice; ?></span>
+                                                        <span style="font-size: 0.8rem">Số lượng:
                                                             <?php echo $result['cart_quantity'] ?></span>
                                                     </div>
-                                                    <div style="font-size: 0.8rem; ">
+                                                    <div style="font-size: 0.8rem; margin-top: 20px; ">
                                                         <a
                                                             href="handle-click.php?action=delete&product_id=<?php echo $result['product_id'] ?>"><span>Xóa</span></a>
                                                         <a style="margin-left: 30px"
