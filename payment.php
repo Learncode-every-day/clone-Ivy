@@ -23,6 +23,10 @@ $cart = new Cart();
 
 ?>
 
+<script>
+    alert('Chào mừng:<?php echo $_GET['user_name'] ?> đến với trang thanh toán');
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,10 +84,9 @@ $cart = new Cart();
                             <label for="">Thanh toán thẻ tín dụng(OnePay)</label>
                         </div>
                         <div class="payment-content-left-method-payment-item-img row">
-                            <img style="height: 50px; margin-right: 10px" src="./assets/icons/visa.svg" alt="" />
-                            <img style="height: 50px" src="./assets/icons/master-card.svg" alt="" />
+                            <img style="height: 200px; margin-right: 10px" src="./assets/img/qr-code.png" alt="" />
                         </div>
-                        <div class="payment-content-left-method-payment-item">
+                        <!-- <div class="payment-content-left-method-payment-item">
                             <input type="radio" name="method-payment" id="" />
                             <label for="">Thanh toán thẻ ATM(OnePay)</label>
                         </div>
@@ -100,7 +103,7 @@ $cart = new Cart();
                         <div class="payment-content-left-method-payment-item">
                             <input type="radio" name="method-payment" id="" />
                             <label for="">Thu tiền tận nơi</label>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="payment-content-right">
@@ -129,7 +132,14 @@ $cart = new Cart();
                 </div>
             </div>
             <div class="payment-content-right-payment">
-                <button>Tiếp tục thanh toán</button>
+                <button id="payment-completed">Tiếp tục thanh toán</button>
+                <script>
+                    const submitBtn = document.getElementById('payment-completed');
+                    submitBtn.addEventListener('click', () => {
+                        alert("Chúc mừng bạn đã thanh toán thành công!!");
+                        window.location.href = "index.php";
+                    });
+                </script>
             </div>
         </div>
     </section>

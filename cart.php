@@ -75,7 +75,7 @@ $cart = new Cart();
                             if ($show_cart) {
                                 while ($result = $show_cart->fetch_assoc()) {
                                     $count++;
-                                    $get_string_price = (int)$result['product_price'];
+                                    $get_string_price = (int)(str_replace(['.', 'đ'], "", $result['product_price']));
                                     $sum_price += $get_string_price;
                             ?>
                                     <tr>
@@ -120,12 +120,24 @@ $cart = new Cart();
                             <tr>
                                 <td>Tổng tiền hàng</td>
                                 <td>
-                                    <p><?php echo $sum_price ?><sup>đ</sup></p>
+                                    <p><?php
+
+                                        // Loại bỏ ký tự 'đ' trước khi định dạng
+                                        $number = str_replace('đ', '', $sum_price);
+
+                                        // Sử dụng hàm number_format để thêm dấu chấm
+                                        $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                        echo $formattedPrice;
+                                        ?><sup>đ</sup></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Thành tiền</td>
-                                <td><?php echo $sum_price ?><sup>đ</sup></td>
+                                <td><?php $number = str_replace('đ', '', $sum_price);
+
+                                    // Sử dụng hàm number_format để thêm dấu chấm
+                                    $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                    echo $formattedPrice; ?><sup>đ</sup></td>
                             </tr>
                             <tr>
                                 <td>Tạm tính</td>
@@ -134,7 +146,11 @@ $cart = new Cart();
                                                 color: #000;
                                                 font-weight: bold;
                                             ">
-                                        <?php echo $sum_price ?><sup>đ</sup>
+                                        <?php $number = str_replace('đ', '', $sum_price);
+
+                                        // Sử dụng hàm number_format để thêm dấu chấm
+                                        $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                        echo $formattedPrice; ?><sup>đ</sup>
                                     </p>
                                 </td>
                             </tr>

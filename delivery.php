@@ -20,6 +20,30 @@ $brand = new Brand();
 $product = new Product();
 $user = new User();
 $cart = new Cart();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $user_name = $_POST['name'];
+    $user_phone = $_POST['phone'];
+    $user_province = $_POST['province'];
+    $user_district = $_POST['district'];
+    $user_address = $_POST['address'];
+
+    $_SESSION['user_name'] = $user_name;
+    $_SESSION['user_phone'] = $user_phone;
+    $_SESSION['user_province'] = $user_province;
+    $_SESSION['user_district'] = $user_district;
+    $_SESSION['user_address'] = $user_address;
+?>
+    <script>
+        sessionStorage.setItem('user_name', <?php echo $_SESSION['user_name'] ?>);
+        sessionStorage.setItem('user_phone', <?php echo $_SESSION['user_phone'] ?>);
+        sessionStorage.setItem('user_province', <?php echo $_SESSION['user_province'] ?>);
+        sessionStorage.setItem('user_district', <?php echo $_SESSION['user_district'] ?>);
+        sessionStorage.setItem('user_address', <?php echo $_SESSION['user_address'] ?>);
+    </script>
+<?php
+    header("location: payment.php?user_name=    " . $_SESSION['user_name']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -78,44 +102,45 @@ $cart = new Cart();
                             (Tạo tài khoản với thông tin bên dưới)
                         </p>
                     </div> -->
-
-                    <div class="delivery-content-left-input-top row">
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="name">Họ tên
-                                <span style="color: red">*</span></label>
-                            <input type="text" name="name" id="" />
+                    <form method="post">
+                        <div class="delivery-content-left-input-top row">
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="name">Họ tên
+                                    <span style="color: red">*</span></label>
+                                <input type="text" name="name" id="" />
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="phoneNumber">Điện thoại
+                                    <span style="color: red">*</span></label>
+                                <input type="text" name="phoneNumber" id="" />
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Tỉnh/TP
+                                    <span style="color: red">*</span></label>
+                                <input type="text" name="province" id="" />
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Quận/Huyện
+                                    <span style="color: red">*</span></label>
+                                <input type="text" name="district" id="" />
+                            </div>
                         </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="phoneNumber">Điện thoại
+                        <div class="delivery-content-left-input-bottom">
+                            <label for="">Địa chỉ
                                 <span style="color: red">*</span></label>
-                            <input type="text" name="phoneNumber" id="" />
+                            <input type="text" name="address" id="" />
                         </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">Tỉnh/TP
-                                <span style="color: red">*</span></label>
-                            <input type="text" name="" id="" />
+                        <div class="delivery-content-left-button row">
+                            <a href="cart.php"> &#10586; Quay lại trang giỏ hàng</a>
+                            <button type="submit">
+                                <a href="payment.php">
+                                    <p style="font-weight: bold">
+                                        Thanh toán và giao hàng
+                                    </p>
+                                </a>
+                            </button>
                         </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">Quận/Huyện
-                                <span style="color: red">*</span></label>
-                            <input type="text" name="" id="" />
-                        </div>
-                    </div>
-                    <div class="delivery-content-left-input-bottom">
-                        <label for="">Địa chỉ
-                            <span style="color: red">*</span></label>
-                        <input type="text" name="" id="" />
-                    </div>
-                    <div class="delivery-content-left-button row">
-                        <a href="cart.php"> &#10586; Quay lại trang giỏ hàng</a>
-                        <button>
-                            <a href="payment.php">
-                                <p style="font-weight: bold">
-                                    Thanh toán và giao hàng
-                                </p>
-                            </a>
-                        </button>
-                    </div>
+                    </form>
                 </div>
                 <div class="delivery-content-right">
                     <table>
@@ -132,14 +157,14 @@ $cart = new Cart();
                             $show_cart = $cart->show_cart();
                             if ($show_cart) {
                                 while ($result = $show_cart->fetch_assoc()) {
-                                    $get_string_price = (int)$result['cart_price'];
+                                    $get_string_price = (int)(str_replace(['.', 'đ'], "", $result['product_price']));
                                     $sum_price += $get_string_price;
                             ?>
-                            <tr>
-                                <td><?php echo $result['cart_name'] ?></td>
-                                <td><?php echo $result['cart_quantity'] ?></td>
-                                <td><?php echo $result['cart_price'] ?><sup>đ</sup></td>
-                            </tr>
+                                    <tr>
+                                        <td><?php echo $result['cart_name'] ?></td>
+                                        <td><?php echo $result['cart_quantity'] ?></td>
+                                        <td><?php echo $result['product_price'] ?><sup>đ</sup></td>
+                                    </tr>
                             <?php
                                 }
                             }
@@ -153,19 +178,32 @@ $cart = new Cart();
                                 <td style="font-weight: bold" colspan="2">
                                     Tổng
                                 </td>
-                                <td><?php echo $sum_price ?><sup>đ</sup></td>
+                                <td><?php $number = str_replace('đ', '', $sum_price);
+
+                                    // Sử dụng hàm number_format để thêm dấu chấm
+                                    $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                    echo $formattedPrice; ?><sup>đ</sup></td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold" colspan="2">
                                     Thuế VAT
                                 </td>
-                                <td><?php echo $sum_price * 0.95; ?><sup>đ</sup></td>
+                                <td><?php
+                                    $number = str_replace('đ', '', $sum_price * 0.95);
+
+                                    // Sử dụng hàm number_format để thêm dấu chấm
+                                    $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                    echo $formattedPrice; ?><sup>đ</sup></td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold" colspan="2">
                                     Tổng tiền hàng
                                 </td>
-                                <td><?php echo $sum_price *.95;?><sup>đ</sup></td>
+                                <td><?php $number = str_replace('đ', '', $sum_price * 0.95);
+
+                                    // Sử dụng hàm number_format để thêm dấu chấm
+                                    $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
+                                    echo $formattedPrice; ?><sup>đ</sup></td>
                             </tr>
                         </tbody>
                     </table>
@@ -177,16 +215,16 @@ $cart = new Cart();
     <?php include "footer.php" ?>
 </body>
 <script>
-const header = document.querySelector("header");
-window.addEventListener("scroll", function() {
-    // Bắt được tọa độ khi di chuyển lên xuống theo chiều dọc - y
-    x = window.pageYOffset;
-    if (x > 0) {
-        header.classList.add("sticky");
-    } else {
-        header.classList.remove("sticky");
-    }
-});
+    const header = document.querySelector("header");
+    window.addEventListener("scroll", function() {
+        // Bắt được tọa độ khi di chuyển lên xuống theo chiều dọc - y
+        x = window.pageYOffset;
+        if (x > 0) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    });
 </script>
 
 </html>

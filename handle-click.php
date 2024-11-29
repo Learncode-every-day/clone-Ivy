@@ -18,15 +18,15 @@ if ($_GET['action'] == 'add') {
     $get_product = $product->get_product($product_id);
     $resultA = $get_product->fetch_assoc();
     $product_name = $resultA['product_name'];
-    $product_price = (int)$resultA['product_price'];
+    $product_price = (int)(str_replace(['.', 'đ'], "", $result['product_price']));
     // var_dump($product_price);
     $insert_cart = $cart->insert_cart($product_name, 1, $product_price, $product_id);
-    header("location: category.php");
+    header("location: category.php?category_id=" . 12);
 } else if ($_GET['action'] == 'delete') {
     $product_id = $_GET['product_id'];
     $cart = new Cart();
     $delete_cart = $cart->delete_cart_item($product_id);
-    header("location: category.php");
+    header("location: category.php?category_id=" . 12);
 } else if ($_GET['action'] == 'detail') {
     $product_id = $_GET['product_id'];
     header("location: product.php?product_id=" . $product_id);
