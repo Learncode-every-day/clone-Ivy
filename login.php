@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $_SESSION['myAccount'] = $user_email;
         // echo "<script>alert('Quyền hạn của bạn: " . $_SESSION['user_role'] . "')</script>";
-        header("location: http://localhost/clone-Ivy/index.php");
+        header("location: index.php");
     }
 }
 ?>
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="checkbox" id="logCheck" />
                         <label for="logCheck" class="text">Ghi nhớ tài khoản</label>
                     </div>
-                    <a href="http://localhost/clone-Ivy/forgotpass.php" class="text">Quên mật khẩu</a>
+                    <a href="forgotpass.php" class="text">Quên mật khẩu</a>
                 </div>
 
                 <div class="input-field button">
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="login-signup">
                     <span class="text">Bạn chưa có tài khoản?
-                        <a href="http://localhost/clone-Ivy/signup.php" class="text signup-link">Đăng kí</a>
+                        <a href="signup.php" class="text signup-link">Đăng kí</a>
                     </span>
                 </div>
             </div>

@@ -13,14 +13,14 @@ if ($_SESSION['user_role'] == 'admin') {
     echo '<script>
     const confirm1 = confirm("Quyền hạn của bạn không đủ xin vui lòng không ấn lần 2 !?");
     if(confirm1) {
-        window.location.href="http://localhost/clone-Ivy/index.php";
+        window.location.href="../index.php";
     }
     </script>';
     $_SESSION['first-visit'] = true;
 }
 
 if (!isset($_SESSION['user_role'])) {
-    header("Location: http://localhost/clone-Ivy/index.php");
+    header("Location: ../index.php");
 }
 ?>
 <!DOCTYPE html>

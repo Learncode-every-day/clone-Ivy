@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             echo "<script>
             const userConfirmed = confirm('Chúc mừng bạn đã đăng ký thành công!!! Vui lòng đăng nhập để vào trang chủ =))');
             if (userConfirmed) {
-                window.location.href = 'http://localhost/clone-Ivy/login.php';
+                window.location.href = 'login.php';
             }
           </script>";
         }
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
                 <div class="login-signup">
                     <span class="text">Bạn đã có tài khoản?
-                        <a href="http://localhost/clone-Ivy/login.php" class="text login-link">Đăng nhập</a>
+                        <a href="login.php" class="text login-link">Đăng nhập</a>
                     </span>
                 </div>
             </div>

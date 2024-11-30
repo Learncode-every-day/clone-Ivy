@@ -13,14 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn-submit'])) {
     //     echo "Không thể gửi email";
     // }
 ?>
-    <script>
-        const confirmation = confirm('Bạn có chắc bạn quên mật khẩu không?');
-        if (confirmation) {
-            alert('Vui lòng liên hệ với admin thông qua số điện thoại: 0942575383');
-        } else {
-            alert('Hành động lấy lại mật khẩu đã bị hủy');
-        }
-    </script>
+<script>
+const confirmation = confirm('Bạn có chắc bạn quên mật khẩu không?');
+if (confirmation) {
+    alert('Vui lòng liên hệ với admin thông qua số điện thoại: 0942575383');
+} else {
+    alert('Hành động lấy lại mật khẩu đã bị hủy');
+}
+</script>
 <?php
 }
 ?>
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn-submit'])) {
                         </div>
                         <div class="login-signup">
                             <span class="text">Bạn vẫn còn nhớ tài khoản của mình?
-                                <a href="http://localhost/clone-Ivy/login.php" class="text login-link">Đăng nhập</a>
+                                <a href="login.php" class="text login-link">Đăng nhập</a>
                             </span>
                         </div>
                     </form>

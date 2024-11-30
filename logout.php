@@ -10,5 +10,5 @@ if (isset($_SESSION['myAccount'])) {
 $cart = new Cart();
 $delete_all_cart_item = $cart->delete_all_cart();
 if ($delete_all_cart_item) {
-    header('location: http://localhost/clone-Ivy/');
+    header('location: index.php');
 }

@@ -2,7 +2,7 @@
     <div class="admin-content-left">
         <ul>
             <li>
-                <a href="http://localhost/clone-Ivy/">Quay lại trang chủ</a>
+                <a href="../index.php">Quay lại trang chủ</a>
             </li>
             <li>
                 <a href="#!">Danh mục</a>

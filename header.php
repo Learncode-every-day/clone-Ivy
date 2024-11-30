@@ -8,45 +8,45 @@
                     if ($show_category) {
                         while ($result = $show_category->fetch_assoc()) {
                     ?>
-                            <li class="menu__item">
-                                <a href="http://localhost/clone-Ivy/category.php?category_id=<?php echo $result['category_id'] ?>"
-                                    class="menu__link"><?php echo $result['category_name']; ?></a>
-                                <ul class="sub-menu">
-                                    <?php
+                    <li class="menu__item">
+                        <a href="category.php?category_id=<?php echo $result['category_id'] ?>"
+                            class="menu__link"><?php echo $result['category_name']; ?></a>
+                        <ul class="sub-menu">
+                            <?php
                                     $show_brand = $brand->show_brand();
                                     if ($show_brand) {
                                         while ($resultA = $show_brand->fetch_assoc()) {
                                     ?>
-                                            <?php if ($result['category_id'] === $resultA['category_id']) { ?>
-                                                <li class="sub-menu__item">
-                                                    <a href="http://localhost/clone-Ivy/category.php?brand_id=<?php echo $resultA['brand_id'] ?>&category_id=<?php echo $resultA['category_id'] ?>"
-                                                        class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
-                                                    <ul class="sub-menu-clone">
-                                                        <?php $show_product = $product->show_product();
+                            <?php if ($result['category_id'] === $resultA['category_id']) { ?>
+                            <li class="sub-menu__item">
+                                <a href="category.php?brand_id=<?php echo $resultA['brand_id'] ?>&category_id=<?php echo $resultA['category_id'] ?>"
+                                    class="sub-menu__link"><?php echo $resultA['brand_name']; ?></a>
+                                <ul class="sub-menu-clone">
+                                    <?php $show_product = $product->show_product();
                                                         if ($show_product) {
                                                             while ($resultB = $show_product->fetch_assoc()) {
                                                                 if ($resultA['brand_id'] === $resultB['brand_id']) {
                                                         ?>
-                                                                    <li class="sub-menu-clone__item">
-                                                                        <a href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $resultB['product_id'] ?>&brand_id=<?php echo $resultB['brand_id'] ?>&category_id=<?php echo $resultB['category_id'] ?>"
-                                                                            class="sub-menu-clone__link">
-                                                                            <?php echo $resultB['product_name']; ?>
-                                                                        </a>
-                                                                    </li>
-                                                        <?php
+                                    <li class="sub-menu-clone__item">
+                                        <a href="product.php?product_id=<?php echo $resultB['product_id'] ?>&brand_id=<?php echo $resultB['brand_id'] ?>&category_id=<?php echo $resultB['category_id'] ?>"
+                                            class="sub-menu-clone__link">
+                                            <?php echo $resultB['product_name']; ?>
+                                        </a>
+                                    </li>
+                                    <?php
                                                                 }
                                                             }
                                                         }
                                                         ?>
-                                                    </ul>
-                                                </li>
-                                            <?php } ?>
-                                    <?php
+                                </ul>
+                            </li>
+                            <?php } ?>
+                            <?php
                                         }
                                     }
                                     ?>
-                                </ul>
-                            </li>
+                        </ul>
+                    </li>
                     <?php
                         }
                     }
@@ -101,31 +101,28 @@
                                     if ($show_product_by_content) {
                                         while ($result = $show_product_by_content->fetch_assoc()) {
                                     ?>
-                                            <tr class="item-search__item">
+                                    <tr class="item-search__item">
 
-                                                <td class="item-search__name"><a
-                                                        href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>"><?php echo $result['product_name'] ?></a>
-                                                </td>
-                                                <td style="display: flex; align-items:center; justify-content: center;">
-                                                    <a
-                                                        href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
-                                                        <img style="width: 50px; object-fit:contain; "
-                                                            src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="">
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a
-                                                        href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
-                                                        <?php echo $result['product_price'] ?>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a
-                                                        href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>">
-                                                        <?php echo $result['product_price_sale'] ?>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                        <td class="item-search__name"><a
+                                                href="product.php?product_id=<?php echo $result['product_id'] ?>"><?php echo $result['product_name'] ?></a>
+                                        </td>
+                                        <td style="display: flex; align-items:center; justify-content: center;">
+                                            <a href="product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                <img style="width: 50px; object-fit:contain; "
+                                                    src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                <?php echo $result['product_price'] ?>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="product.php?product_id=<?php echo $result['product_id'] ?>">
+                                                <?php echo $result['product_price_sale'] ?>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     <?php
                                         }
                                     }
@@ -151,7 +148,7 @@
                             </div>
                             <ul class="dropdown__list">
                                 <li class="dropdown__item">
-                                    <a href="http://localhost/clone-Ivy/index.php">
+                                    <a href="index.php">
                                         <span class="dropdown__text">Trang chủ</span>
                                         <i class="fa fa-plus-circle dropdown__icon"></i>
                                     </a>
@@ -163,13 +160,13 @@
                                     </a>
                                 </li>
                                 <li class="dropdown__item">
-                                    <a href="http://localhost/clone-Ivy/logout.php">
+                                    <a href="logout.php">
                                         <span class="dropdown__text">Đăng xuất</span>
                                         <i class="fa fa-plus-circle dropdown__icon"></i>
                                     </a>
                                 </li>
                                 <li class="dropdown__item">
-                                    <a href="http://localhost/clone-Ivy/admin/category-add.php">
+                                    <a href="admin/category-add.php">
                                         <span class="dropdown__text">Vào trang quản lý</span>
                                         <i class="fa fa-plus-circle dropdown__icon"></i>
                                     </a>
@@ -180,8 +177,8 @@
                     <li class="other__item other__item-cart">
                         <div class="dropdown">
                             <div class="dropdown__select">
-                                <a href="http://localhost/clone-Ivy/cart.php" class="other__link"><img
-                                        src="./assets/icons/cart-shopping.svg" alt="" class="cart-icon" />
+                                <a href="cart.php" class="other__link"><img src="./assets/icons/cart-shopping.svg"
+                                        alt="" class="cart-icon" />
                                 </a>
                             </div>
                             <?php
@@ -204,37 +201,37 @@
                                         // var_dump($result);
 
                                 ?>
-                                        <li class="dropdown__item">
-                                            <a style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
-                                                href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id']; ?>&brand_id=<?php echo $result['brand_id'] ?>&category_id=<?php echo $result['category_id'] ?>">
-                                                <img style="height: 50px; width: 30px; object-fit:contain; display:block;"
-                                                    src="./admin/uploads/<?php echo $result['product_img']; ?>" alt="">
-                                                <div style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
-                                                    class="cart-info">
-                                                    <h3
-                                                        style="font-size: 1.5rem; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; width: 130px;">
-                                                        <?php echo $result['cart_name'] ?></h3>
-                                                    <div
-                                                        style="display: flex; align-items:center; justify-content:space-between;  margin-top: 10px; width: 100%;">
-                                                        <span style="font-size: 0.8rem">Giá:
-                                                            <?php
+                                <li class="dropdown__item">
+                                    <a style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                        href="product.php?product_id=<?php echo $result['product_id']; ?>&brand_id=<?php echo $result['brand_id'] ?>&category_id=<?php echo $result['category_id'] ?>">
+                                        <img style="height: 50px; width: 30px; object-fit:contain; display:block;"
+                                            src="./admin/uploads/<?php echo $result['product_img']; ?>" alt="">
+                                        <div style="display: flex; position: relative; width: 100%; justify-content: space-around; flex-direction: column"
+                                            class="cart-info">
+                                            <h3
+                                                style="font-size: 1.5rem; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; width: 130px;">
+                                                <?php echo $result['cart_name'] ?></h3>
+                                            <div
+                                                style="display: flex; align-items:center; justify-content:space-between;  margin-top: 10px; width: 100%;">
+                                                <span style="font-size: 0.8rem">Giá:
+                                                    <?php
                                                             $number = str_replace('đ', '', $result['cart_price']);
                                                             // Sử dụng hàm number_format để thêm dấu chấm
                                                             $formattedPrice = number_format($number, 0, ',', '.') . 'đ';
                                                             echo $formattedPrice; ?></span>
-                                                        <span style="font-size: 0.8rem">Số lượng:
-                                                            <?php echo $result['cart_quantity'] ?></span>
-                                                    </div>
-                                                    <div style="font-size: 0.8rem; margin-top: 20px; ">
-                                                        <a
-                                                            href="handle-click.php?action=delete&product_id=<?php echo $result['product_id'] ?>"><span>Xóa</span></a>
-                                                        <a style="margin-left: 30px"
-                                                            href="handle-click.php?action=detail&product_id=<?php echo $result['product_id'] ?>"><span>Xem
-                                                                chi tiết</span></a>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
+                                                <span style="font-size: 0.8rem">Số lượng:
+                                                    <?php echo $result['cart_quantity'] ?></span>
+                                            </div>
+                                            <div style="font-size: 0.8rem; margin-top: 20px; ">
+                                                <a
+                                                    href="handle-click.php?action=delete&product_id=<?php echo $result['product_id'] ?>"><span>Xóa</span></a>
+                                                <a style="margin-left: 30px"
+                                                    href="handle-click.php?action=detail&product_id=<?php echo $result['product_id'] ?>"><span>Xem
+                                                        chi tiết</span></a>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
 
                                 <?php
                                     }

@@ -121,7 +121,7 @@ if (basename(__FILE__) === "category.php") {
 
                                             <?php
                                             if ($resultA['category_id'] === $result['category_id']) {
-                                                echo "<li><a href='" . "http://localhost/clone-Ivy/category.php?brand_id=" . $resultA['brand_id'] . "&category_id=" . $resultA['category_id'] . "'>" . $resultA['brand_name'] . "</a></li>";
+                                                echo "<li><a href='" . "category.php?brand_id=" . $resultA['brand_id'] . "&category_id=" . $resultA['category_id'] . "'>" . $resultA['brand_name'] . "</a></li>";
                                             }
 
                                             ?>
@@ -163,7 +163,7 @@ if (basename(__FILE__) === "category.php") {
 
                                     <div class="category-right-content__item">
                                         <a
-                                            href="http://localhost/clone-Ivy/product.php?product_id=<?php echo $result['product_id'] ?>&brand_id=<?php echo $result['brand_id'] ?>&category_id=<?php echo $result['category_id'] ?>">
+                                            href="product.php?product_id=<?php echo $result['product_id'] ?>&brand_id=<?php echo $result['brand_id'] ?>&category_id=<?php echo $result['category_id'] ?>">
                                             <div class="visible-part">
                                                 <img src="./admin/uploads/<?php echo $result['product_img'] ?>" alt="" />
                                                 <div class="overlay"></div>
@@ -176,11 +176,10 @@ if (basename(__FILE__) === "category.php") {
                                                     ?><sup>đ</sup></p>
                                             </div>
                                             <div class="actions-button">
-                                                <a
-                                                    href="http://localhost/clone-Ivy/handle-click.php?product_id=<?php echo $result['product_id'] ?>&action=detail"><button
+                                                <a href="handle-click.php?product_id=<?php echo $result['product_id'] ?>&action=detail"><button
                                                         class="detail-btn">Chi tiết</button></a>
                                                 <a
-                                                    href="http://localhost/clone-Ivy/handle-click.php?product_id=<?php echo $result['product_id'] ?>&product_name=<?php echo $result['product_name'] ?>&product_price=<?php echo $result['product_price'] ?>&action=add"><button
+                                                    href="handle-click.php?product_id=<?php echo $result['product_id'] ?>&product_name=<?php echo $result['product_name'] ?>&product_price=<?php echo $result['product_price'] ?>&action=add"><button
                                                         class="add-to-buy-btn" id="add-to-buy-btn">Thêm giỏ hàng</button></a>
                                             </div>
                                         </a>
